@@ -1,0 +1,30 @@
+
+
+static void order(Node root, ArrayList<Integer> ans){
+        
+        //base case
+        Stack<Node> s = new Stack<>();
+        
+        s.push(root);
+        
+        while( !s.isEmpty()){
+            
+            Node temp = s.pop();
+            
+            ans.add(temp.data);
+            
+            if( temp.right != null){
+                
+                s.push( temp.right);
+            }
+            
+            if(temp.left != null){
+                
+                s.push( temp.left);
+            }
+            
+            
+        }
+        
+        return;
+    }
