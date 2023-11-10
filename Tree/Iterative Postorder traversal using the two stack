@@ -1,0 +1,35 @@
+ //Function to return a list containing the postorder traversal of the tree.
+    ArrayList<Integer> postOrder(Node root)
+    {
+       // Yusing the itration
+       
+       ArrayList<Integer> ans = new ArrayList<Integer>();
+       
+       Stack<Node> s = new Stack<>();
+      // Stack<Node> s2 = new Stack<>();
+       
+       
+       s.push(root);
+       
+       while( ! (s.isEmpty()) ){
+           
+           Node temp = s.pop();
+           
+           ans.add(temp.data);
+           
+           //left;
+           
+           if(temp.left != null){
+               
+               s.push(temp.left);
+           }
+           
+           if(temp.right != null){
+               
+               s.push(temp.right);
+           }
+       }
+       
+       Collections.reverse(ans);
+       return ans;
+    }
