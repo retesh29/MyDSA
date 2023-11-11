@@ -1,0 +1,28 @@
+T&S = O(n)
+
+ int height(Node node) 
+    {
+        // base case
+        // same say smallest input kya hau null
+        if( node == null ) return 0;
+        
+        return Math.max(height(node.left), height(node.right))+1;
+    }
+
+/-------------------------------------------
+simple code
+
+ int height(Node node) 
+    {
+        // base case
+        // same say smallest input kya hau null
+        if( node == null ) return 0;
+
+   // find left subtree height 
+// find rightsubtree height
+// max in a,b + 1;
+      int a = height(node.left);
+      int b =  height(node.right);
+        
+        return Math.max(a,b)+1;
+    }
