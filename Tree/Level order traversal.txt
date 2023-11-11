@@ -1,0 +1,37 @@
+T&S = O n
+
+static ArrayList <Integer> levelOrder(Node node) 
+  {        
+    
+        
+         ArrayList<Integer> ans = new ArrayList <Integer>();
+        
+         if(node == null){
+             
+             ans.add(-1);
+             return ans;
+         } 
+         
+         Deque<Node> q  = new LinkedList();
+         
+         q.add(node);
+         
+         while( !q.isEmpty()){
+             
+             
+             Node temp = q.remove();
+             
+             ans.add(temp.data);
+             
+             if( temp.left != null){
+                 
+                 q.add(temp.left);
+             }
+             
+             if( temp.right != null){
+                 q.add(temp.right);
+             }
+         }
+        
+        return ans;
+    }
