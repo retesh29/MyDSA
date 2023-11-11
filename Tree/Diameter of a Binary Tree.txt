@@ -1,6 +1,70 @@
+T=O(n)
+S= O(n) // because of recursion
+
+class Solution {
+    // Function to return the diameter of a Binary Tree.
+    int diameter(Node root) {
+        // Your code here
+        
+       pair ans = diameterFast(root);
+       
+       return ans.d;
+     
+
+    }
+    
+    pair diameterFast(Node root){
+        
+        if(root == null){
+            
+            pair p = new pair(0,0);
+            return p;
+        }
+        
+        
+        // return value of diameter and hight of left and right
+        pair left= diameterFast(root.left);
+        
+        pair right = diameterFast(root.right);
+        
+        
+        // now check 3 options
+        
+        int op1 = left.d;
+        int op2 = right.d;
+        
+        int op3 = left.h + right.h+ 1;
+        
+        // return the value of hight and dimeter
+        pair ans = new pair(0, 0);
+        
+        ans.d =  Math.max(op1, Math.max(op2,op3) );
+        ans.h = Math.max( left.h, right.h )+1;
+        
+        
+        return ans;
+        
+        
+    }
+   
+    
+
+}
+
+    class pair {
+        
+        int d ;
+        int h ;
+        
+        pair(int d, int h){
+            
+            this.d = d;
+            this.h = h;
+        }
+    }
 
 
-
+=------------------------------------------------------------------------------------
 // time complexity = N^2 
 
 // Function to return the diameter of a Binary Tree.
