@@ -1,0 +1,27 @@
+
+
+
+// time complexity = N^2 
+
+// Function to return the diameter of a Binary Tree.
+    int diameter(Node root) {
+        // Your code here
+        
+        // it it T= O(n^2 ) that is bad time complexity
+        
+        //base case
+        
+        if( root == null){
+    
+            return 0;
+        }
+        
+        
+        int h1 = diameter(root.left);
+        int h2 = diameter(root.right);
+        int h3 = height(root.left) + height(root.right)+1;
+        
+        
+        return Math.max(h1, Math.max(h2,h3) );
+        
+    }
