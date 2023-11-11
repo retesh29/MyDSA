@@ -1,0 +1,37 @@
+  public ArrayList<Integer> reverseLevelOrder(Node node) 
+    {
+        // T&S = O(n)
+        
+        ArrayList<Integer> ans = new ArrayList<Integer>();
+        
+        if(node == null) return ans;
+
+        
+        Deque<Node> q = new LinkedList<>();
+        
+        q.add(node);
+        
+        while( !q.isEmpty()){
+            
+            Node temp = q.remove();
+            
+            // put the ans;
+            ans.add(temp.data);
+            
+            // now add the right than left
+           // here order is  important
+            
+            if( temp.right != null){
+                
+                q.add(temp.right);
+            }
+            
+            if(temp.left != null){
+                
+                q.add(temp.left);
+            }
+        }
+        
+        Collections.reverse(ans);
+        return ans;
+    }
