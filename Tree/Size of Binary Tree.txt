@@ -1,5 +1,7 @@
 
 
+// without recurtion mai count the no of element of the stack 
+
 
 	public static int getSize(Node root)
 	{
