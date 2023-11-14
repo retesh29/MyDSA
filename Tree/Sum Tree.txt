@@ -1,0 +1,58 @@
+// T & s = O(n)
+
+
+class Solution
+{
+	boolean isSumTree(Node root)
+	{
+           
+        return isSumTreeFast(root).isSumTree;
+	}
+	
+	Pair isSumTreeFast(Node root){
+	    
+	    if(root == null){
+	        
+	        return new Pair(true, 0);
+	    }
+	    
+	    if( root.left == null && root.right == null){
+	        
+	        return new Pair(true, root.data);
+	    }
+	    
+	    
+	    // check for left and right
+	    
+	    Pair left = isSumTreeFast(root.left);
+	    Pair right = isSumTreeFast(root.right);
+	    
+	    //finding leftsubtree + rightsumbtree sum is equal to node
+	    boolean isSumEqual = left.sum + right.sum == root.data;
+	    
+	    // finding total sum for the root node
+	    int sum = left.sum + right.sum + root.data;
+	    
+	    if(left.isSumTree  && right.isSumTree && isSumEqual){
+	        
+	        return new Pair(true, sum);
+	    }else{
+	        
+	        return new Pair(false, sum);
+	    }
+	}
+	
+	
+	
+	
+	class Pair{
+	    
+	    boolean isSumTree;
+	    int sum ;
+	    
+	    Pair(boolean s, int sum){
+	        
+	        this.isSumTree = s;
+	        this.sum = sum;
+	    }
+	}
