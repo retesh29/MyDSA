@@ -1,0 +1,54 @@
+class Tree
+{
+    
+    //Function to check whether a binary tree is balanced or not.
+    class Pair{
+        
+        boolean b;
+        int h;
+        
+        Pair(boolean b, int h){
+            
+            this.b = b;
+            this.h = h;
+        }
+    }
+    
+    boolean isBalanced(Node root)
+    {
+        
+        return solve(root).b;
+    }
+    
+    Pair solve(Node root){
+        
+        
+        //base 
+        if( root == null){
+            
+            return new Pair(true,0);
+        }
+        
+        
+        //boleage apne left ka or right ka hight or blaced hai ki nhi le kar do && hight
+        
+        Pair left = solve(root.left);
+        Pair right = solve(root.right);
+        
+        // finding diffrence
+        boolean diff = Math.abs( left.h - right.h) <= 1;
+        
+        
+        // new hight
+        int height = Math.max(left.h ,right.h)+1;
+        
+        
+        
+        if (left.b && right.b && diff){
+            
+            return new Pair(true, height);
+        }else{
+            return new Pair(false, height);
+        }
+        
+    }
