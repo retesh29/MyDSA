@@ -1,0 +1,101 @@
+ArrayList <Integer> boundary(Node root)
+	{
+	    ArrayList <Integer> bdArray = new ArrayList <Integer>();
+	    
+	    if(root == null) return bdArray;
+	    
+	    // push the root node
+	    bdArray.add(root.data);
+	    
+	    //find the left part boundery expect leaf
+	    
+	    leftBoundary(root.left, bdArray);
+	    
+	    //find the leaf node of the tree
+	  
+	  
+	    if(root.left != null || root.right != null){
+	        
+	        leafOfTree(root,bdArray);
+	        
+	    }
+
+	    
+	        
+	    
+	    //find the right boundery with reverse
+	    
+	    rightReverseBoundary(root.right, bdArray);
+	    
+	    return bdArray;
+	    
+	}
+	
+	void leftBoundary(Node root, ArrayList<Integer> ans){
+	    
+	    if( root == null){
+	        
+	        return;
+	    }
+	     // because we don't need leaf node
+
+	    if(root.left == null && root.right == null){
+	        
+	        return;
+	    }
+	    
+	    
+	    //
+	    ans.add(root.data);
+	    
+	    if(root.left != null){
+	        
+	        leftBoundary(root.left, ans);
+	   
+	    }else{ // when don't have left than other wise not
+	        
+	        leftBoundary(root.right, ans);
+	    }
+	}
+	
+	
+	// for leaf
+	void leafOfTree(Node root, ArrayList<Integer> ans ){
+	    
+	    if( root == null) return;
+	    
+	    if(root.left == null && root.right == null){
+	        
+	        ans.add(root.data);
+	        return;
+	    }
+	    
+	    leafOfTree(root.left, ans);
+	    leafOfTree(root.right,ans);
+	}
+	
+	//for right
+	void rightReverseBoundary(Node root , ArrayList<Integer> ans){
+	    
+	    if(root == null) return ;
+	 
+	    // because we don't need leaf node
+	    if(root.left == null && root.right == null){
+	        
+	        return;
+	    }
+	    
+	    
+	    
+	    if(root.right != null){
+	        
+	        rightReverseBoundary(root.right, ans);
+	   
+	    }else{ // when don't have left than other wise not
+	        
+	        rightReverseBoundary(root.left, ans);
+	    }
+	    
+	    ans.add(root.data);
+
+	}
