@@ -1,0 +1,76 @@
+T& S= O(n)
+	ArrayList<Integer> zigZagTraversal(Node root)
+	{
+	    
+	    // to return the ans;
+	    ArrayList<Integer> ans = new ArrayList<Integer>();
+	    
+	    // edge case
+	    if(root == null) return ans;
+	    
+	    // for level order traversal
+	    Deque<Node> q = new LinkedList<>();
+	    
+	    boolean leftToRight = true;
+	    
+	    
+	    q.add(root);
+	    
+	    while( !q.isEmpty()){
+	        
+	        // this will help you to know current level size
+	        int lvlSize = q.size();
+	        
+	        // to store the currect order
+	        Node currAns[] = new Node[lvlSize];
+	        
+	        // next level ki element q mai add kar dega
+	        // or curr level ke element ko remove kar dega
+	        for(int i =0; i <lvlSize ; i++){
+	            
+	            Node temp = q.poll();
+	            
+	            //index nikalege flag ke accouding  
+	            
+	            int idx = leftToRight ? i : lvlSize -i-1;
+	            
+	            currAns[idx] = temp;
+	            
+	            
+	            // left and right k child ko add karge 
+	            
+	            if(temp.left != null){
+	                
+	                q.add(temp.left);
+	            }
+	            
+	             if(temp.right != null){
+	                
+	                q.add(temp.right);
+	            }
+	            
+	        }
+	        
+	        // hame ek level ka pure elemet mil chuke according to order
+	        
+	        // ans m lvl dal dege
+	        
+	        for(int i=0; i <lvlSize ; i++){
+	            
+	            ans.add(currAns[i].data);
+	        }
+	        
+	        // flag change karge kyuki ek levl complete ho chuka hai
+	        
+	        leftToRight = !leftToRight;
+	        
+	    }
+	    
+	    
+	    return ans;
+	    
+	  
+	    
+	    
+	    
+	}
