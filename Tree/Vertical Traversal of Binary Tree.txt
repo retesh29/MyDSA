@@ -1,0 +1,239 @@
+// there are two ways this one is simple one
+// seconde one is level order sorting 
+
+T=O(n log n );
+
+
+static ArrayList <Integer> verticalOrder(Node root)
+    {      
+        
+        //to store the ans
+        ArrayList <Integer> ans = new ArrayList <Integer>();
+        
+        /// pair for horizontal distance and ans correspoding the hd
+        // here don't need of worry about level order because we are using the level order traversal
+        
+        Map<Integer, ArrayList<Integer> > map = new TreeMap<>();
+        
+        // q for bfs
+        
+        Deque<Pair> q = new LinkedList<>();
+        
+        q.add(new Pair(0,root));
+        
+        
+        while( !q.isEmpty()){
+            
+            
+            // finding the  size of the level
+            
+            int size = q.size();
+            
+            
+            // proccessing the curr level 
+            
+            for(int i =0; i < size; i++){
+                
+                Pair curr = q.poll();
+                
+                // fetching hd and node data 
+                
+                int hd = curr.hd;
+                Node node = curr.node;
+                
+                // pushing the map 
+                
+                if( !map.containsKey( hd )){
+                    
+                    map.put( hd, new ArrayList<Integer>() );
+             
+                }
+            
+                map.get(hd).add(node.data);
+                
+                
+                // now add th left and righ element of the root
+                
+                if(node.left != null){
+                    
+                    q.add(new Pair(hd-1, node.left));
+                }
+                if(node.right != null){
+                    
+                    q.add(new Pair(hd+1, node.right));
+                }
+            }
+            
+        }
+        
+        // now fetch the all arraylist according the hd and add the arrayList and;
+        
+        for( ArrayList <Integer> e: map.values() ){
+            
+            
+           for(Integer i : e){
+               
+               ans.add(i);
+           }
+        }
+        
+        return ans;
+        
+        
+    }
+    
+    static class Pair{
+        
+        int hd;
+        Node node;
+        
+        Pair(int hd, Node node){
+            
+            this.hd = hd;
+            this.node = node;
+        }
+    }
+
+
+---------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------
+//Function to find the vertical order traversal of Binary Tree.
+    static ArrayList <Integer> verticalOrder(Node root)
+    {
+        // T= (n)
+        // T= (n)
+        
+            // hd = x             lvl=y            nodes.data
+        TreeMap<Integer , TreeMap< Integer, ArrayList<Integer> > > map = new TreeMap<>();
+
+       //          node       hd  lvl
+        Deque< Tuple > q = new LinkedList<>();
+        
+        
+        // to answer
+        ArrayList<Integer> ans = new ArrayList<>();
+        
+        
+        //edge case
+        
+        if( root == null ) return ans;
+        
+        
+        q.addFirst( new Tuple(root,0, 0) );
+        
+        
+        while( !q.isEmpty()){
+            
+        
+            
+            //poping the curr q element
+            Tuple curr = q.poll();
+            
+           
+            Node frontNode = curr.node;
+            
+            // taking horizonal distance 
+            int hd = curr.hd;
+            
+            // taking level or y
+            int lvl = curr.lvl;
+            
+            // crete the  entry for hz and lvl in map
+            //------------------------------------------------------------
+            //if entry is not present
+            
+            // check for hd present
+            if(!map.containsKey(hd)){
+                
+                map.put(hd, new TreeMap<>());
+            }
+            // check for lvl
+f                
+                map.get(hd).put( lvl, new ArrayList<>());
+            }
+            
+            //finally insert the element
+            
+            map.get(hd).get(lvl).add(frontNode.data);
+            
+           // -----------------------------------------
+            
+            
+
+            
+            // now pushing the left child if have in q
+            // if you going to left than harizontal value will dicress or x is decress
+            // and when we push the child the level will incress by defult
+            //so level + 1;
+            
+             
+            if( frontNode.left != null ){
+                
+                q.add( new Tuple( frontNode.left, hd-1,lvl+1));
+            }
+            
+            // now pushing the right child if have in q
+            // if you going to right than harizontal value will incress or x is incress
+            // and when we push the child the level will incress bydefult
+            //so level + 1;
+            
+           
+            
+            if(frontNode.right != null){
+                
+                q.add( new Tuple(frontNode.right, hd+1,lvl+1));
+
+                
+            }
+            
+        }
+        
+        //here we have answer in map 
+        // now we have to fetch the data from the map
+        // and insert the value in ans arrayList;
+        
+        
+        
+        
+        //  we using tree map so no need to worry of horizontal ordring 
+        // we taking the  valus of first map we get pair of integer nad arraylist
+        // then we will takes valuse of lvl so we get array for eack level
+        // then we have to fetch the data of arrays and simply put the ans;
+        
+        for(TreeMap< Integer, ArrayList<Integer> >  lvl: map.values()){
+            
+            
+            for(ArrayList<Integer> arr: lvl.values()){
+                
+                for(Integer e : arr){
+                    
+                    ans.add(e);
+                }
+            }
+        }
+          
+     
+         
+
+        return ans;
+        
+    }
+    
+    
+    
+  
+}
+
+
+  class Tuple{
+        
+        Node node;
+        int hd;
+        int lvl;
+        
+        Tuple(Node node, int hd, int lvl){
+            
+            this.node = node;
+            this.hd = hd;
+            this.lvl = lvl;
+        }
