@@ -39,7 +39,7 @@
                 
                 if( !map.containsKey( hd )){
                     
-                    map.put( hd, curr.data  );
+                    map.put( hd, node.data  );
                     
              
                 }
