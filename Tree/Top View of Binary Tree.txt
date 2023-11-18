@@ -7,7 +7,7 @@
         /// pair for horizontal distance and ans correspoding the hd
         // here don't need of worry about level order because we are using the level order traversal
         
-        Map<Integer, ArrayList<Integer> > map = new TreeMap<>();
+        Map<Integer, Integer > map = new TreeMap<>();
         
         // q for bfs
         
@@ -39,9 +39,8 @@
                 
                 if( !map.containsKey( hd )){
                     
-                    map.put( hd, new ArrayList<Integer>() );
+                    map.put( hd, curr.data  );
                     
-                    map.get(hd).add(node.data);
              
                 }
             
@@ -64,13 +63,12 @@
         
         // now fetch the all arraylist according the hd and add the arrayList and;
         
-        for( ArrayList <Integer> e: map.values() ){
+        for( Integer e: map.values() ){
             
-            
-           for(Integer i : e){
+
                
-               ans.add(i);
-           }
+               ans.add(e);
+       
         }
         
         return ans;
