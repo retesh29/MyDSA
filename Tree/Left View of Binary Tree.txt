@@ -51,3 +51,42 @@ ArrayList<Integer> leftView(Node root)
 
 
 ++++++++++++++++++++++++++++++++++++++++++++++
+
+// using the recusion
+
+ ArrayList<Integer> leftView(Node node)
+    {     
+        ArrayList<Integer>  ans = new ArrayList<Integer>();
+        
+        
+        solve(node,0, ans);
+        
+        return ans;
+        
+    }
+    
+    void solve( Node root, int lvl,ArrayList<Integer>  ans ){
+        
+        
+        if( root == null){
+            
+            return ;
+        }
+        
+        if(lvl == ans.size()){
+            
+            ans.add(root.data);
+        }
+        
+        
+        
+        if( root.left != null){
+            
+            solve(root.left,lvl +1, ans);
+        }
+         if( root.right != null){
+            
+            solve(root.right,lvl +1, ans);
+        }
+    
+    }
