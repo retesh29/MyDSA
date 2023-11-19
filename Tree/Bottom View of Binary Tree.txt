@@ -1,5 +1,9 @@
 // there are two method by recursion and bfs
 // tm = N long n
+
+
+===================================================
+// using the BFS
 public ArrayList <Integer> bottomView(Node root){
  
         //to store the ans
@@ -71,4 +75,83 @@ public ArrayList <Integer> bottomView(Node root){
             this.hd = hd;
             this.node = node;
         }
-    }        // intition hd
+    }        // intition had
+
+===========================================================================
+
+// using the recursion
+
+ public ArrayList <Integer> bottomView(Node root)
+    
+    {
+        
+        ArrayList <Integer> ans = new ArrayList <Integer>();
+        
+        TreeMap<Integer, Pair> map = new  TreeMap<Integer,Pair>();
+        
+        if(root == null ) return ans;
+        
+        solve(root,0,0, map ,ans);
+        
+        for(Pair e: map.values()){
+            
+            ans.add(e.node.data);
+            
+        }
+        
+        return ans;
+        
+    }
+    
+    
+    void solve( Node root, int hd,int vd,  TreeMap<Integer,Pair> map,  ArrayList <Integer> ans ){
+        
+        
+        if( root == null ){
+            
+            return ;
+        }
+        
+        if(!map.containsKey(hd)){
+            
+            map.put(hd, new Pair(vd,root));
+        
+            
+        }else{
+          
+           if( map.get(hd).vd <= vd) {
+               
+               map.get(hd).vd = vd;
+               map.get(hd).node = root;
+           } 
+        }
+        
+        if(root.left != null){
+            
+            solve(root.left, hd-1, vd +1, map, ans);
+        }
+        
+        if(root.right != null){
+            
+            solve(root.right, hd+1, vd + 1, map, ans);
+        }
+        
+        
+        
+    }
+    
+    
+    
+    
+  static class Pair{
+        
+        int vd;
+        Node node;
+        
+        Pair(int vd, Node node){
+            
+            this.vd = vd;
+            this.node = node;
+        }
+    }      
+    
