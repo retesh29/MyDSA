@@ -1,0 +1,43 @@
+ ArrayList<Integer> rightView(Node node) {
+        
+        ArrayList<Integer>  ans = new ArrayList<Integer>();
+        
+        
+        Deque<Node> q = new LinkedList<>();
+        
+        q.add(node);
+        
+        while( !q.isEmpty()){
+            
+            // size of current lv
+            
+            int size = q.size();
+            
+            int lastElementOflvl = -1;
+            
+            for(int i =0; i < size; i++){
+                
+                Node temp = q.poll();
+                
+                lastElementOflvl = temp.data;
+                
+                if(temp.left != null){
+                    
+                    q.add(temp.left);
+                    
+                }
+                if(temp.right != null){
+                    
+                    q.add(temp.right);
+                    
+                }
+            }
+            
+            // level has complete 
+            // in int lastelemof lvl meai hamara last element of lvl hoga jo ans ka part hai
+            
+            ans.add(lastElementOflvl);
+        }
+        return ans;
+        
+    }
