@@ -1,4 +1,8 @@
- ArrayList<Integer> rightView(Node node) {
+T& S= O(n)
+==========================================
+
+using the bfs
+ArrayList<Integer> rightView(Node node) {
         
         ArrayList<Integer>  ans = new ArrayList<Integer>();
         
@@ -41,3 +45,6 @@
         return ans;
         
     }
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+using the recurstion
