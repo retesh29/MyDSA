@@ -1,0 +1,53 @@
+=======================
+
+// using the bfs
+
+ArrayList<Integer> leftView(Node root)
+    {
+          ArrayList<Integer>  ans = new ArrayList<Integer>();
+        
+        if(root == null) return ans;
+        
+        Deque<Node> q = new LinkedList<>();
+        
+        q.add(root);
+        
+        while( !q.isEmpty()){
+            
+            // size of current lv
+            
+            int size = q.size();
+            
+            int lastElementOflvl = -1;
+            
+            for(int i =0; i < size; i++){
+                
+                Node temp = q.poll();
+                
+                
+                lastElementOflvl = temp.data;
+                
+                  if(temp.right != null){
+                    
+                    q.add(temp.right);
+                    
+                }
+                if(temp.left != null){
+                    
+                    q.add(temp.left);
+                    
+                }
+              
+            }
+            
+            // level has complete 
+            // in int lastelemof lvl meai hamara last element of lvl hoga jo ans ka part hai
+            
+            ans.add(lastElementOflvl);
+        }
+        return ans;
+        
+    }
+
+
+++++++++++++++++++++++++++++++++++++++++++++++
