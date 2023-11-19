@@ -2,6 +2,7 @@ T& S= O(n)
 ==========================================
 
 using the bfs
+// last elemetn of every level
 ArrayList<Integer> rightView(Node node) {
         
         ArrayList<Integer>  ans = new ArrayList<Integer>();
@@ -23,7 +24,13 @@ ArrayList<Integer> rightView(Node node) {
                 
                 Node temp = q.poll();
                 
-                lastElementOflvl = temp.data;
+                lastElementOflvl = temp.data; // in replace of this
+
+/* or 
+ if (i == size - 1) {
+                ans.add(temp.data);
+            }
+*/
                 
                 if(temp.left != null){
                     
@@ -48,3 +55,40 @@ ArrayList<Integer> rightView(Node node) {
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 using the recurstion
+
+ ArrayList<Integer> rightView(Node node) {
+        
+        ArrayList<Integer>  ans = new ArrayList<Integer>();
+        
+        
+        solve(node,0, ans);
+        
+        return ans;
+        
+    }
+    
+    void solve( Node root, int lvl,ArrayList<Integer>  ans ){
+        
+        
+        if( root == null){
+            
+            return ;
+        }
+        
+        if(lvl == ans.size()){
+            
+            ans.add(root.data);
+        }
+        
+         if( root.right != null){
+            
+            solve(root.right,lvl +1, ans);
+        }
+    
+        
+        if( root.left != null){
+            
+            solve(root.left,lvl +1, ans);
+        }
+        
+    }      
