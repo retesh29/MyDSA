@@ -1,0 +1,74 @@
+// there are two method by recursion and bfs
+// tm = N long n
+public ArrayList <Integer> bottomView(Node root){
+ 
+        //to store the ans
+        ArrayList <Integer> ans = new ArrayList <Integer>();
+        
+        /// pair for horizontal distance and ans correspoding the hd
+        // here don't need of worry about level order because we are using the level order traversal
+        
+        TreeMap<Integer, Integer > map = new TreeMap<>();
+        
+        // q for bfs
+        
+        Deque<Pair> q = new LinkedList<>();
+        
+        q.add(new Pair(0,root));
+        
+        
+        while( !q.isEmpty()){
+            
+        
+                Pair curr = q.poll();
+                
+                // fetching hd and node data 
+                
+                int hd = curr.hd;
+                Node node = curr.node;
+                
+                // pushing the map 
+            
+                map.put( hd , node.data  );
+                
+                
+                // now add th left and righ element of the root
+                
+                if(node.left != null){
+                    
+                    q.add(new Pair(hd-1, node.left));
+                }
+                if(node.right != null){
+                    
+                    q.add(new Pair(hd+1, node.right));
+                }
+        //    }
+            
+        }
+        
+        // now fetch the all arraylist according the hd and add the arrayList and;
+        
+        for( Integer e: map.values() ){
+            
+
+               
+               ans.add(e);
+       
+        }
+        
+        return ans;
+        
+        
+    }
+    
+    static class Pair{
+        
+        int hd;
+        Node node;
+        
+        Pair(int hd, Node node){
+            
+            this.hd = hd;
+            this.node = node;
+        }
+    }        // intition hd
