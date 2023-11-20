@@ -1,0 +1,45 @@
+// using the recursion
+T&S = O(n)
+
+Node lca(Node root, int n1,int n2)
+	{
+		// using the recursion 
+		
+		if(root == null){
+		    
+		    return null;
+		}
+		
+		//if find the element so back 
+		if( root.data == n1 || root.data == n2){
+		    
+		    return root;
+		}
+		
+		
+		// find the  left sub tree
+		
+		Node left = lca (root.left, n1, n2);
+		
+		// find the right sub tree;
+		
+		Node right = lca (root.right,n1, n2);
+		
+		// now check what we return acorrding hte return the answer
+		
+		if( left == null && right == null){
+	
+		    return null;
+		    
+		}else if( left != null && right == null){
+		    
+		    return left;
+		    
+		}else if ( left == null && right != null){
+		    
+		    return right;
+		}else {
+		    
+		    return root;
+		} 
+	}
