@@ -1,0 +1,111 @@
+
+//by recursion
+public int sumOfLongRootToLeafPath(Node root)
+    {
+        //here we have to maintain two values a
+        // height and sum 
+        
+       int[] ans = new int[2];
+       
+       solve(root,0,0,ans);
+       return ans[1];
+        
+    }
+    
+    void solve(Node root, int len , int sum, int[] ans ){
+        
+        if(root == null){
+            
+            if( len > ans[0]){
+                
+                ans[0] = len;
+                ans[1] = sum;
+            
+            
+            // len == sum than we have to find max one     
+            }else if( len == ans[0]){
+                
+                ans[1]= Math.max(sum, ans[1]);
+            }
+            return;
+        }
+        
+        solve(root.left, len+1,sum + root.data, ans);
+        solve(root.right, len+1,sum + root.data, ans);
+
+        
+    }
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+// by BFS 
+
+
+ public int sumOfLongRootToLeafPath(Node root)
+    {
+        if( root == null) return 0;
+        
+        int maxH = 0;
+        int maxSum = 0;
+        
+        
+        Deque<Tripal> q = new LinkedList<>();
+        
+        q.add(new Tripal(root,0,root.data ));
+        
+        while( !q.isEmpty()){
+            
+            
+            Tripal curr = q.poll();
+            
+            Node node = curr.node;
+            
+            int h = curr.h;
+            
+            int sum = curr.sum;
+            
+            // if height is bigger means path is bigger
+            if( h > maxH){
+                
+                maxH = h;
+                maxSum = sum;
+            }
+            
+            // may be sum could be bigger
+            else if( h == maxH && sum > maxSum){
+                
+                maxSum = sum;
+                
+            }
+            
+            if(node.left != null){
+                
+                q.add( new Tripal(node.left, h+1, sum + node.left.data));
+                
+            }
+             if(node.right != null){
+                
+                q.add(new Tripal(node.right,h+1, sum + node.right.data));
+                
+            }
+        }
+        
+        return maxSum;
+    }
+    
+    
+    
+    static class Tripal{
+        
+        Node node; 
+        int h;
+        int sum; 
+        
+        Tripal(Node node, int h, int sum){
+            
+            this.node = node;
+            this.h = h;
+            this.sum = sum;
+        }
+    }
