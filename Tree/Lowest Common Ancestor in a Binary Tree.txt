@@ -1,6 +1,8 @@
 // using the recursion
 T&S = O(n)
 
+https://www.interviewbit.com/blog/wp-content/uploads/2021/11/Image-1-3-768x818.png
+
 Node lca(Node root, int n1,int n2)
 	{
 		// using the recursion 
