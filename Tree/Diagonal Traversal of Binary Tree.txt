@@ -1,0 +1,97 @@
+TS= O(n)
+
+========================================================================
+
+// by bfs
+ public ArrayList<Integer> diagonal(Node root)
+      {
+          
+          
+           ArrayList<Integer> ans = new  ArrayList<Integer>();
+           
+           Deque<Node> q = new LinkedList<>();
+           
+           q.add( root);
+           
+           while(!q.isEmpty()){
+               
+               // to process current dional + previous left element 
+               int size = q.size();
+               
+               while( size-- > 0){  // for perticular digonal
+                   
+                   Node rn = q. poll();
+                   
+                   while( rn != null){ // going to diogonal o
+                       
+                       ans.add(rn.data);
+                       
+                       if(rn.left != null){
+                           
+                           q.add( rn.left);
+                       }
+                       
+                       rn = rn.right;
+                   }
+               }
+               
+           }
+           
+           return ans;
+           
+      }
+
+
+====================================================
+
+//by recurstion
+
+// T = O( nlogn) 
+public ArrayList<Integer> diagonal(Node root)
+      {
+            ArrayList<Integer>  ans = new  ArrayList<Integer> ();
+            
+            TreeMap<Integer,ArrayList<Integer> > map = new  TreeMap<>();
+           
+           solve(root,0,map);
+           
+           for(ArrayList<Integer> e : map.values()){
+               
+               for(Integer x: e){
+                   
+                   ans.add(x);
+               }
+           }
+           
+           return ans;
+      }
+      
+      
+      void solve(Node root, int d,  TreeMap<Integer,ArrayList<Integer> > map){
+          
+          if( root == null ) return;
+          
+          
+          // if key not conatiain
+          if( !map.containsKey(d)){
+              
+              map.put(d, new ArrayList<Integer>());
+              
+          }
+          
+          // adding the value of key 
+          map.get(d).add(root.data);
+          
+          // if left means new diagonal so d +1
+          if( root.left != null){
+              
+              solve(root.left, d+1, map);
+          }
+          
+          // right means same diagoanl so d 
+          if(root.right != null){
+              
+              solve(root.right,d,map);
+          }
+          
+      }
