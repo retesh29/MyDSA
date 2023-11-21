@@ -1,0 +1,80 @@
+  // using the recursion
+    int k = 0;
+    public int kthAncestor(Node root, int count, int node)
+    {
+        //Write your code here
+        
+        
+        k = count;
+        
+        Node x = solve(root, node);
+        
+        if( k > 0){
+            
+            return -1;
+        }
+        
+        if( x != null ){
+            return x.data;
+        }
+        
+        return -1;
+    }
+    
+    Node solve(Node root,  int target){
+        
+        if( root == null ) return null ;
+        
+        if(root.data == target || k == 0 ){
+            
+            return root;
+        }
+        
+        
+        Node left = solve(root.left, target);
+        Node right = solve(root.right, target);
+        
+        if(left != null){
+            
+          k--;    
+            
+          if( k > 0){
+              
+             
+              return left;
+              
+          }else if ( k == 0){
+              
+              return root;
+          }else {
+              
+              return left;
+          }
+          
+        }
+         if(right != null){
+             
+            k--;
+
+             
+             if( k > 0){
+              
+             
+             return right;
+
+             }else if ( k == 0){
+              
+              return root;
+              
+            }else {
+              
+              return right;
+            }
+            
+
+        }
+        
+        
+        return null;
+        
+    }
