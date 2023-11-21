@@ -1,0 +1,68 @@
+
+
+T= O n*n 
+
+// using the recursion optimize by dynamjic programming 
+
+// global count 
+     int count = 0; 
+        // beacuse  we can reach integer out of bound 
+                // clearly mention in question
+
+    
+    public int sumK(Node root,int k)
+    {
+        // code here 
+       
+        ArrayList<Integer> path = new ArrayList<Integer> ();
+        
+        solve(root, k , path);
+        
+        return count % 1000000007;
+    }
+    
+    
+   void  solve(Node root, int sum , ArrayList<Integer>  path ){
+        
+        if( root == null ) return ;
+        
+        // store are path
+        path.add(root.data);
+        
+        
+        // now check any path equal to  sum
+        
+         int tempSum = 0;
+        
+        for(int i = path.size() -1 ; i >= 0; i--){
+            
+            tempSum += path.get(i);
+            
+            if( tempSum == sum){
+                
+            
+                count++;
+            }
+        }        
+        
+        if( root.left != null){
+            
+            solve(root.left,sum,path );
+         
+
+        }
+        
+        
+        if( root.right != null){
+            
+            solve(root.right,sum,path );
+            
+
+        }
+        
+       
+       
+         // backtracking
+       
+           path.remove( path.size() -1 );
+    }
