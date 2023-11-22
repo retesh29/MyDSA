@@ -1,0 +1,70 @@
+
+// T= O(n)
+ArrayList<Integer> inOrder(Node root)
+    {
+        // morris traversal 
+        
+        // need two node curr for curr node and pre for predesore
+        Node curr = root;
+        Node pre = null ;
+        
+        ArrayList<Integer>  ans = new ArrayList<Integer> ();
+        
+        // if root is null than no need to traverse
+        if( root == null) return ans;
+        
+        // if curr == null  measns traversls has completed
+        while( curr != null){
+            
+            // we left get left than could possibility
+            // last elemt of 
+            // only right exist means we come after second tiem 
+            if(curr.left == null){
+                
+                ans.add(curr.data);
+                
+                curr = curr.right;
+            
+                
+            }else{ // need to go visit tree more element or tree exist
+            
+              
+                // assign left child for find predisior
+                pre = curr.left;
+                
+                // going to search predesore
+                while( pre.right != null && pre.right != curr){
+                    
+                    pre = pre.right;
+                }
+                
+                //reached the predesore element
+                // connect to thread to curr and 
+                // go for other tree
+                if(pre.right == null){
+                    
+                    pre.right = curr;
+                    curr = curr.left;
+                    
+                
+                    
+                }else{ // measn we are reversing the or we have travelled belwo tree
+                       // this is last of node going right subtree
+                  // doing undo all the thread
+                  
+                  
+                  pre.right = null;
+                  ans.add(curr.data);
+                  curr = curr.right;
+                    
+                }
+                
+            
+            }
+            
+            
+        }
+        
+        return ans;
+        
+    }
