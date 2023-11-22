@@ -1,0 +1,58 @@
+// using the by refernce 
+
+class count{
+        
+        int i ;
+        
+        count(int i){
+            
+            this.i = i;
+        }
+    }
+    //Function to return a tree created from postorder and inoreder traversals.
+    Node buildTree(int in[], int post[], int n) {
+        
+        count index = new count(n-1);
+        
+        return solve(in, post, index , 0, n-1,n);
+        
+    
+    }
+    
+    Node solve(int[] inorder, int[] post, count index , int inStart, int inEnd, int n){
+        
+        
+        if( index.i < 0  || inStart > inEnd){
+            
+            return null;
+        }
+        
+        
+        int temp = post[index.i];
+       
+        index.i--;
+        
+        Node root = new Node(temp);
+        
+        int position =  findPosition(temp, inorder, inStart, inEnd);
+        
+        root.right = solve(inorder, post, index, position +1, inEnd ,n) ;
+        root.left =  solve(inorder , post, index, inStart, position -1,n );
+        
+        
+        return root;
+        
+    }
+    
+    int findPosition(int temp, int[] inorder,int inStart, int inEnd){
+        
+        
+        for(int i = inStart; i <= inEnd; i++){
+            
+            
+            if(inorder[i] == temp){
+                return i;
+            }
+        }
+        return -1;
+    }
