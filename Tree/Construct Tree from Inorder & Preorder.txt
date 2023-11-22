@@ -1,0 +1,136 @@
+
+//T=O( n*n )
+//S= O(n)
+
+
+// using the finding index of the node ;
+ public static Node buildTree(int inorder[], int preorder[], int n)
+    {
+        // t=(N*N)
+        // because of every node we finding the inorder postion index
+        
+        return solve(inorder, preorder,0,0, n-1,n);
+    }
+    
+    static Node solve(int[] in, int[] pre,int index,int inStarting, int inEnding, int n){
+        
+        //                we redducing the size of the inOder 
+        //               so time by incresing the startng point and reducing the ending pointer
+        
+        if( index >= n || inStarting > inEnding  ){
+            
+            return null;
+        }
+        
+        // step 1 
+        // make preorder index element root;
+        
+        int temp = pre[index];
+        
+        Node root = new Node(temp);
+        
+        // step 2
+        // search left and right element 
+        
+        int position = toFindPossition(in,temp,inStarting, inEnding);
+        
+        root.left = solve(in,pre, index+1, inStarting, position-1, n );
+        root.right = solve(in, pre,  index + position - inStarting + 1 , position+1, inEnding, n);
+        
+        return root;
+        
+    }
+    
+    
+    static int toFindPossition(int[] in, int temp, int inStarting, int inEnding ){
+        
+        for(int i = inStarting; i <= inEnding; i++){
+            
+            if(in[i] == temp){
+                
+                return i;
+            }
+        }
+        
+        return -1;
+    }
+    
+  =============================================================================
+// using call by reference
+
+class Solution
+{
+    static class count {
+        
+        int i;
+        
+        count(int count){
+            
+            this.i = count;
+        }
+    }
+    
+    public static Node buildTree(int inorder[], int preorder[], int n)
+    {
+        // t=(N*N)
+        // because of every node we finding the inorder postion index
+        
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer> ();
+        
+        count index = new count(0);
+        
+
+        
+        return solve(inorder, preorder, index , 0 , n-1, n );
+    }
+    
+    static Node solve(int[] in, int[] pre,  count  index ,int inStarting, int inEnding, int n){
+        
+        //                we redducing the size of the inOder 
+        //               so time by incresing the startng point and reducing the ending pointer
+        
+        if( index.i >= n || inStarting > inEnding  ){
+            
+            return null;
+        }
+        
+        // step 1 
+        // make preorder index element root;
+        
+        int temp = pre[index.i++];
+        
+        Node root = new Node(temp);
+        
+        // step 2
+        // search left and right element 
+        
+        int position = findPosition(temp,in,inStarting,inEnding);
+        
+       
+    // Incremen t index only for the left subtree
+    root.left = solve(in, pre, index, inStarting , position - 1, n);
+    
+    // fingthe right subtree index in pre order traversal 
+    root.right = solve(in, pre, index ,  position + 1, inEnding, n);
+
+    return root;
+    
+    }
+    
+    static int findPosition (int temp , int[] in, int s , int e){
+        
+        
+        for(int i = s; i <= e ; i++){
+            
+            if( in[i] == temp){
+                
+                return i;
+            }
+        }
+        
+        return -1;
+    }
+    
+  
+    
+}
