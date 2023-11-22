@@ -1,0 +1,124 @@
+ public static int minTime(Node root, int target) 
+    {
+        // Your code goes here
+        
+        Map<Node, Node> pp = new HashMap<>();
+        
+        // step 1 & 2 find parent node mapping and target node address/ postion
+        Node targetNode = toFindParentAndTarget(root,pp, target);
+        
+        // step 3 burn the tree
+        
+        return burnTree(targetNode, pp);
+        
+    }
+    
+    static int burnTree(Node targetPoint , Map<Node, Node> pp ){
+        
+        
+        //for timing
+        int time = 0;
+        
+        // for store burn node
+        
+        Map< Node , Boolean > burnNode = new HashMap<>();
+        
+        // q for travesal
+        
+        Deque<Node> q = new LinkedList<>();
+        
+        q.add(targetPoint);
+        
+        boolean flag = false;
+        
+        while( ! q.isEmpty()){
+            
+            // start the travesal with conditiaon
+            
+            // only poll or burn  their neighbour
+            int size = q.size();
+            
+            // to monitore q momentum
+            flag = false;
+            
+            for(int i =0; i < size; i++){
+                
+                Node curr = q.poll();
+                
+                burnNode.put(curr, true);
+                
+                
+                // add the neighbour of node if not burn and not null
+                
+                if( curr.left != null && burnNode.containsKey(curr.left) == false ){
+                    
+                    q.add(curr.left);
+                    flag = true;
+                }
+                
+                 
+                if( curr.right != null && burnNode.containsKey(curr.right) == false ){
+                    
+                    q.add(curr.right);
+                    flag = true;
+                }
+                
+                if( pp.get(curr) != null && burnNode.containsKey( pp.get(curr) ) == false ){
+                    
+                    q.add( pp.get(curr));
+                    flag = true;
+                }
+
+                
+            }
+            
+            if( flag){
+                
+                time++;
+            }
+            
+            
+        }
+        
+        return time;
+    }
+    
+    
+    static Node toFindParentAndTarget(Node root, Map<Node, Node> map, int target ){
+        
+        // using bfs we can find the parent node
+        
+        
+        Deque<Node> q = new LinkedList<>();
+        Node targetNode = null;
+        
+        q.add(root);
+        
+        while( !q.isEmpty()){
+            
+            
+            Node curr = q.poll();
+            
+            if(curr.data == target){
+                
+                targetNode = curr;
+            }
+            
+            if( curr.left != null){
+                
+                map.put(curr.left , curr);
+                
+                q.add(curr.left);
+            }
+            
+            if( curr.right != null){
+                
+                map.put(curr.right , curr);
+                
+                q.add(curr.right);
+            }
+        }
+        
+        return targetNode;
+        
+    }
