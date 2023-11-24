@@ -1,0 +1,126 @@
+T= O(n)
+S = O(1)
+
+public int kthLargest(Node root,int k)
+    {  
+   
+        // 
+        
+        int i = 0;
+        
+        Node succ = null;
+
+        while(root != null){
+            
+            
+            if( root.right == null){
+                
+                // inoder
+                i++;
+                
+                if( k == i){
+                    
+                    return root.data;
+                }
+                
+                // continue morris
+                
+                root = root.left;
+                
+            }else{
+                
+                
+                // for linkeig 
+                succ = root.right;
+                
+                
+                while( succ.left != null && succ.left != root){
+                    
+                    succ = succ.left;
+                }
+                
+                
+                // mean first time else last time
+                if( succ.left == null){
+                    
+                    succ.left = root;
+                    
+                    root = root.right;
+                    
+                    
+                }else {
+                    
+                    succ.left =  null;
+                    
+                    i++;
+                
+                    if( k == i){
+                    
+                    return root.data;
+                    
+                    }
+                    
+                    
+                    root = root.left;
+                    
+                }
+                
+               
+            }
+        }
+        
+     
+      return -1;
+    
+        //Your code here
+    }
+
+
++======================
+
+
+ int i = 0; // global 
+    // return the Kth largest element in the given BST rooted at 'root'
+    public int kthLargest(Node root,int k)
+    {  
+   
+        // 
+        
+        if(root == null) return -1;
+        
+        
+        
+        int right = kthLargest(root.right, k);
+    
+      
+        // left is not -1 means we have found ans so no need go ahead just return the ans
+        
+        if( right != -1){
+            
+            return right;
+        }
+        
+        
+        // we are an N part in LNR
+        
+        i++;
+        // check the we at same ancestor
+        
+        if( k == i){
+            
+            return root.data;
+        }
+        
+        
+        // means/ ans lies in right subtree so call for right sub tree
+        // only we rigt choice
+        
+        return kthLargest(root.left, k); 
+        
+    
+    
+      
+    
+    
+        //Your code here
+    }
