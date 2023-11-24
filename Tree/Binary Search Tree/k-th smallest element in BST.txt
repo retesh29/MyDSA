@@ -1,0 +1,120 @@
+// using morris inorder traversal
+
+
+public int KthSmallestElement(Node root, int k) {
+        //morris inoder
+        
+        
+        
+        int i = 0;
+        
+        Node pred = null;
+
+        while(root != null){
+            
+            
+            if( root.left == null){
+                
+                // inoder
+                i++;
+                
+                if( k == i){
+                    
+                    return root.data;
+                }
+                
+                // continue morris
+                
+                root = root.right;
+                
+            }else{
+                
+                
+                // for linkeig 
+                pred = root.left;
+                
+                
+                while( pred.right != null && pred.right != root){
+                    
+                    pred = pred.right;
+                }
+                
+                
+                // mean first time else last time
+                if( pred.right == null){
+                    
+                    pred.right = root;
+                    
+                    root = root.left;
+                    
+                    
+                }else {
+                    
+                    pred.right =  null;
+                    
+                    i++;
+                
+                    if( k == i){
+                    
+                    return root.data;
+                    
+                    }
+                    
+                    
+                    root = root.right;
+                    
+                }
+                
+               
+            }
+        }
+        
+     
+      return -1;
+    }
+
+
+------------------------------------------------------------
+// T&S = O(N)
+
+   
+    int i = 0; // global 
+    public int KthSmallestElement(Node root, int k) {
+        // 
+        
+        if(root == null) return -1;
+        
+        
+        
+        int left = KthSmallestElement(root.left, k);
+    
+      
+        // left is not -1 means we have found ans so no need go ahead just return the ans
+        
+        if( left != -1){
+            
+            return left;
+        }
+        
+        
+        // we are an N part in LNR
+        
+        i++;
+        // check the we at same ancestor
+        
+        if( k == i){
+            
+            return root.data;
+        }
+        
+        
+        // means/ ans lies in right subtree so call for right sub tree
+        // only we rigt choice
+        
+        return KthSmallestElement(root.right, k); 
+        
+    
+    
+      
+    }
+    
