@@ -1,4 +1,6 @@
-    public int isPairPresent(Node root, int target)
+//using the travaersal and hashSet
+TS= O(N)
+public int isPairPresent(Node root, int target)
     {
         // Write your code here
         // to soter previosu nodes
@@ -37,6 +39,9 @@
     }
 
 ===============================================
+// using the InOrder Travarsal and two pointer appproch
+TS= O(N)
+
     public int isPairPresent(Node root, int target)
     {
         // using the inoder traversal space
