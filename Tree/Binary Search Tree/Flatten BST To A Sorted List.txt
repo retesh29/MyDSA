@@ -35,4 +35,35 @@ if (root == null) return null;
         toInorder(root.left, inorder);
         inorder.add(root.data);
         toInorder(root.right, inorder);
+
+    }
+    
+
+
++++++++++++++++++++++++++++++++
+TS = O(n)
+
+ public static TreeNode<Integer> flatten(TreeNode<Integer> root) {
+        if (root == null) return null;
+
+        // create dummy node and assign head and pre
+        TreeNode<Integer> head = new TreeNode<>(-1);
+        TreeNode<Integer> pre = head;
+
+        solve(root, pre);
+
+        return head.right;
+    }
+
+    static void solve(TreeNode<Integer> root, TreeNode<Integer> pre) {
+        if (root == null) return;
+
+        // traversal
+        solve(root.left, pre);
+
+        pre.right = root;
+        pre.left = null;
+        pre = root;
+
+        solve(root.right, pre);
     }
