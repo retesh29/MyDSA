@@ -1,0 +1,30 @@
+class Solution {
+    int i =0 ;
+    public TreeNode bstFromPreorder(int[] preorder) {
+        
+        if(preorder.length == 0) return null;
+
+    
+
+       return  bstRange(preorder, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+
+
+    TreeNode bstRange(int[] pre, int min , int max ){
+
+        if( i >= pre.length) return null;
+
+        if( pre[i] < min || pre[i] > max) return null;
+
+        // now need to create the node
+
+        TreeNode root = new TreeNode(pre[i++]);
+
+        root.left = bstRange(pre, min, root.val);
+        root.right = bstRange(pre, root.val, max);
+
+        return root;
+
+
+    }
+}
