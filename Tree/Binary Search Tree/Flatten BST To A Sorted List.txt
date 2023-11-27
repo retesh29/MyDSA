@@ -1,0 +1,38 @@
+
+// using the inorder traverssaaal
+TS= O(N)
+public static TreeNode<Integer> flatten(TreeNode<Integer> root)
+    {
+if (root == null) return null;
+
+        // Step 1: Find the inorder
+        ArrayList<Integer> inorder = new ArrayList<>();
+        toInorder(root, inorder);
+
+        // Step 2: Traverse array and create nodes
+        TreeNode<Integer> head = new TreeNode<>(inorder.get(0));
+        TreeNode<Integer> curr = head;
+
+        for (int i = 1; i < inorder.size(); i++) {
+            TreeNode<Integer> temp = new TreeNode<>(inorder.get(i));
+            curr.right = temp;
+            curr.left = null;
+            curr = temp;
+        }
+
+        // Step 3: Make the last node null
+        curr.left = null;
+        curr.right = null;
+
+        return head;
+    }
+
+    static void toInorder(TreeNode<Integer> root, ArrayList<Integer> inorder) {
+        if (root == null) {
+            return;
+        }
+
+        toInorder(root.left, inorder);
+        inorder.add(root.data);
+        toInorder(root.right, inorder);
+    }
