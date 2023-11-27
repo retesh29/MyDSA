@@ -1,0 +1,40 @@
+ Node buildBalancedTree(Node root) 
+    {
+        //step1  create inorder travessal 
+        
+        ArrayList<Integer> inor = new ArrayList<>();
+        
+        inorder(root, inor);
+        
+        // step 2 find mid
+        
+
+        return toAVL(0, inor.size()-1, inor);
+    }
+    
+    
+    Node toAVL(int s , int e, ArrayList<Integer> inorder){
+        
+        
+        if (s > e) return null;
+        
+        int mid = (s+e) / 2;
+        
+        Node root = new Node(inorder.get(mid));
+        
+        root.left = toAVL(s,mid-1, inorder);
+        root.right = toAVL(mid+1, e, inorder);
+        
+        return root;
+    }
+    
+    void inorder(Node root, ArrayList<Integer>  ans){
+        
+        if( root == null) return ;
+        
+        inorder(root.left, ans);
+        
+        ans.add(root.data);
+        
+        inorder(root.right, ans);
+    }
