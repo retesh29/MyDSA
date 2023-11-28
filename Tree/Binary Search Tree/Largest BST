@@ -1,0 +1,64 @@
+class Solution{
+    
+    static class info{
+        
+        int max;
+        int min;
+        boolean isBST;
+        int size;
+        
+        info(int max, int min, boolean isBST, int size){
+            
+            this.max = max;
+            this.min = min;
+            this.isBST = isBST;
+            this.size = size;
+        }
+    }
+    
+    // Return the size of the largest sub-tree which is also a BST
+    static int largestBst(Node root)
+    {
+        // Write your code here
+        int[] ans = {0};
+        
+        solve(root, ans);
+        
+        return ans[0];
+        
+    }
+    
+    static info solve(Node root, int[] ans){
+        
+        
+        if(root == null){
+            
+            return new info(Integer.MIN_VALUE,Integer.MAX_VALUE, true, 0 );
+        }
+        
+        // call left and right
+        info left = solve(root.left, ans);
+        info right = solve(root.right, ans);
+        
+        
+        // upding cuurr value for return
+        
+        int currMax = Math.max (root.data, right.max);
+        int currMin = Math.min(root.data, left.min);
+        int currSize = left.size + right.size + 1;
+        
+        
+        // cheking curr is bst
+        
+        boolean currIsBST = left.isBST && right.isBST && ( root.data > left.max && root.data < right.min);
+        
+        if( currIsBST){
+            
+            ans[0] = Math.max(ans[0], currSize);
+        }
+        
+        return new info(currMax,currMin, currIsBST, currSize );
+        
+    }
+    
+}
