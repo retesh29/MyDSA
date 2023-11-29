@@ -67,12 +67,13 @@ public class Heap {
 			int leftChild = i *2 + 1;
 			int rightChild = i * 2 + 2;
 			
-			if(arr[leftChild] > arr[i]  && leftChild < size) {
+			if(arr[leftChild] > arr[i]  && leftChild < size && arr[rightChild] < arr[leftChild]) {
 				
 				swap(leftChild , i , arr);
 				i = leftChild;
 			
-			}else if(arr[rightChild] > arr[i]  && rightChild < size) {
+			}
+			if (arr[rightChild] > arr[i]  && rightChild < size && arr[leftChild] < arr[rightChild] ) {
 				
 				swap(rightChild , i , arr);
 				i = rightChild;
