@@ -1,0 +1,83 @@
+T= O(n)
+S= O(n)
+class Solution{
+    public int[] mergeHeaps(int[] a, int[] b, int n, int m) {
+        
+        //step 1: merge both arr into 1
+        
+        int[] arr = new int[n+m];
+        
+        int i =0;
+        for( int x =0 ; x < n; x++){
+            
+            arr[i++] = a[x];
+        }
+        for(int y=0 ; y < m; y++){
+            
+            arr[i++] = b[y];
+        }
+    
+        // step 2: build heap
+        
+        buildHeap(arr, arr.length );
+        
+        // step 3 :return ans;
+        return arr;
+        
+    }
+    
+    
+     void buildHeap(int[] arr, int n) {
+		
+		// we are avoiding the leaf node or nor processing leaf 
+		for(int i = (n/2)-1 ; i >=0; i--) {
+			
+			toHeapify(arr, n,i);
+		}
+	}
+	
+	 void toHeapify(int[] arr, int n , int i) {
+		
+		// we are assuming that 
+		// i element is lagrest between left subtree and right
+		
+		int largest = i;
+		
+		int left = (2 * i) + 1;
+		int right = (2 * i)+ 2;
+		
+		// chacking the properti
+		
+		if(left < n && arr[largest] < arr[left]) {
+			
+			largest = left;
+			// age hum swap karege
+		}
+		if( right < n && arr[largest] < arr[right]) {
+			
+			largest = right;
+			// age hum swap karege
+		}
+		
+		// cheking jo value pehle largest thi wo avi v ahai
+		// ni to swap kardo values ko
+		if( largest != i) {
+			
+			swap(i, largest, arr);
+			// now checkign recursivly from top to bottom 
+			// it it still largest element in left and right sub tree 
+			// if not than do same agoin
+			toHeapify(arr,n, largest);
+			
+		}
+		
+	}
+// swap a element in array
+void swap(int i , int j , int [] arr) {
+		
+		int temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
+	}
+	
+}
