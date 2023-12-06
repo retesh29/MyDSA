@@ -1,0 +1,91 @@
+// T= N
+// s = N
+
+class Solution {
+
+// count to no of nodes in tree
+    int nodeCount(Node root){
+        
+        if(root == null){
+            return 0;
+        }
+        
+        return 1 + nodeCount(root.left) + nodeCount(root.right);
+    }
+    
+    boolean isHeap(Node tree) {
+        // code here
+        
+        if(isCBT(tree,0,nodeCount(tree)) && isMaxHeap(tree)){
+            
+            return true;
+        }
+        
+        return false;
+        
+        
+        
+        
+    }
+    // checking the tree is CBT
+    boolean isCBT(Node root, int i,int count){
+        
+        if(root == null){
+            
+            return true;
+        }
+        
+        if(i >= count){
+            
+            return false;
+        }
+        
+     
+        boolean left = isCBT(root.left, (i *2 )+ 1, count  );
+        boolean right = isCBT(root.right,  (i *2) + 2, count);
+        
+        if(left && right){
+            
+            return true;
+        }else{
+            
+            return false;
+        }
+        
+        
+    }
+
+// checkin the tree is maxHeap
+    boolean isMaxHeap(Node root){
+        
+   
+        // if leaf node the
+        if(root.left == null && root.right == null){
+            
+            return true;
+        }
+        
+        // have only sinlge node
+        if(root.left != null && root.right == null){
+            
+            if(root.data > root.left.data){
+                return true;
+            }else{
+                
+                return false;
+            }
+            
+        }
+        
+        
+        boolean left = isMaxHeap(root.left);
+        boolean right = isMaxHeap(root.right);
+        
+        if(left && right && (root.left.data < root.data && root.right.data < root.data)){
+            return true;
+        }else{
+            return false;
+        }
+        
+    }
+}
