@@ -1,0 +1,31 @@
+class Solution{
+    public static int kthSmallest(int[] arr, int l, int r, int k) 
+    { 
+        //Your code here
+        // stemp 1 make max heap for k element 
+        
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>();      
+        
+        for(l = 0 ; l < k; l++ ){
+            
+            maxHeap.add(arr[l]);
+        }
+        
+        // make loop for remaining element 
+        // if curr elemetn is min tto max than popin heap and push curr
+        
+        for( l = k ; l <= r ; l++){
+            
+            if( arr[l] < maxHeap.element() ){
+                
+                maxHeap.remove();
+                maxHeap.add( arr[l]);
+            }
+        }
+        
+        // step 3: kthe element maxheap ke top per hoga to 
+        // return kara do
+        
+        return maxHeap.element();
+    } 
+}
