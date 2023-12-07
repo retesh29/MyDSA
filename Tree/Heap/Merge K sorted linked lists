@@ -1,0 +1,63 @@
+Expected Time Complexity: O(nk Logk)
+Expected Auxiliary Space: O(k)
+
+
+// a is an array of Nodes of the heads of linked lists
+// and N is size of array a
+
+
+class Solution
+{
+    //Function to merge K sorted linked list.
+    Node mergeKList(Node[]arr,int K)
+    {
+        //Step 1: create the min heap for k element 
+        // here using comparetore for the acndign oreder of object
+        
+        PriorityQueue<Node> minHeap = new PriorityQueue<>((a,b)->(a.data-b.data));
+        
+        //step 2 push first k element into the heap
+      
+      for(int i =0; i < arr.length ; i++){
+          
+          
+          if(arr[i] != null){
+              
+              minHeap.add(arr[i]);
+          }
+          
+      }
+      
+      // step 3: pop min elment and add in ll and incress pointer 
+      // util min heap not 0
+      
+      // make dummu node for the singly ll 
+      
+      Node dummy  = new Node(-1);
+      Node tail = dummy ;
+      while( !minHeap.isEmpty()){
+          
+          // pop in qmin heap
+           // create node and add wiht ll
+          Node temp = minHeap.poll();
+          
+          tail.next = temp;
+          tail = temp;
+          
+          //add the element of the pop node
+          // if not null than add other no need to add
+          if(temp.next != null){
+              
+              minHeap.add(temp.next);
+          }
+      }
+      
+      
+      return dummy.next;
+      
+      
+      
+      
+      
+    }
+}
