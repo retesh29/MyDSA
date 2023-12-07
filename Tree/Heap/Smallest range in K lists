@@ -1,0 +1,96 @@
+// T=
+
+
+class Solution
+{
+	static int[] findSmallestRange(int[][] arr,int n,int k)
+	{
+	    //using the heap
+	    // Expected Time Complexity : O(n * k *log k)
+      //Expected Auxilliary Space  : O(k)
+	    
+	    
+	    //step 1 : make the k size min heap and store the first elemetn of each ll
+	    // step 1.1: also track the max element and ans
+	    
+	    int[] ans = new int[2];
+	    int max = Integer.MIN_VALUE;
+	    int min = Integer.MAX_VALUE;
+	    
+	    PriorityQueue<Node> minHeap = new PriorityQueue<>((a,b) -> a.data- b.data);
+	    
+	    for(int row = 0; row < k; row++){
+	        
+	        
+	        minHeap.add(new Node(row,0, arr[row][0]));
+	        
+	        min = Math.min (min, arr[row][0]);
+	        max = Math.max (max, arr[row][0]);
+	    }
+	    
+	    //current ans 
+	    ans[0] = min;
+	    ans[1] = max;
+	    
+	    
+	    // go for other range
+	    
+	    while( !minHeap.isEmpty() ){
+	        
+	        
+	        Node temp = minHeap.poll();
+	        
+	
+	        
+	        min = temp.data;
+	        
+	        // finding smallest differcn between curr min and max  and ans;
+	        
+	        if( (max - min) < ( ans[1]- ans[0]) ){
+	            
+	            ans[0] = min;
+	            ans[1] = max;
+	        }
+	        
+	        
+	        
+	        
+	        // now incressing the pointer and push the element in heap 
+	        
+	        if( temp.col+1 < arr[0].length ){
+	            
+	            
+	            max = Math.max( max, arr[temp.row][temp.col +1 ]);
+	            minHeap.add( new Node(temp.row, temp.col +1 , arr[temp.row][temp.col +1 ]));
+	            
+	        }else{
+	            
+	            break;
+	        }
+	        
+	        
+	        
+	    }
+	    return ans;
+	    
+	    
+	}
+	
+	
+	
+	
+	// to store the data in q
+	static class Node{
+	    
+	    int row;
+	    int col;
+	    int data;
+	    
+	    Node(int row, int col, int data){
+	        
+	        this.row = row;
+	        this.col = col;
+	        this.data = data;
+	    }
+	}
+}
