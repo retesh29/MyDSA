@@ -1,22 +1,18 @@
 int countLeaves(Node node) 
-    {
-         // 
-         
-         
+    {    
          if(node == null){
              
              return 0 ;
          }
-         
-         
-         int c = countLeaves(node.left);
-         
-         if( node.left == null && node.right == null){
+
+        // leaf node
+        if( node.left == null && node.right == null){
              
              return 1;
          }
          
-        c+= countLeaves(node.right);
+         int LeftLeafCount  = countLeaves(node.left);
+         int rightLeafCount = countLeaves(node.right);
     
-        return c;
+        return LeftLeafCount +  rightLeafCount;
     }    
