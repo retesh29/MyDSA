@@ -13,6 +13,7 @@ Node lca(Node root, int n1,int n2)
 		}
 		
 		//if find the element so back 
+               // both are same path (like parent and child)
 		if( root.data == n1 || root.data == n2){
 		    
 		    return root;
