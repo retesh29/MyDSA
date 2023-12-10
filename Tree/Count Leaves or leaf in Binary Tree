@@ -11,8 +11,8 @@ int countLeaves(Node node)
              return 1;
          }
          
-         int LeftLeafCount  = countLeaves(node.left);
+         int leftLeafCount  = countLeaves(node.left);
          int rightLeafCount = countLeaves(node.right);
     
-        return LeftLeafCount +  rightLeafCount;
+        return leftLeafCount +  rightLeafCount;
     }    
