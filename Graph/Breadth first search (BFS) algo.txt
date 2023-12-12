@@ -1,0 +1,47 @@
+    public ArrayList<Integer> bfsOfGraph(int V, ArrayList<ArrayList<Integer>> adj) {
+        
+        // to store the  ans;
+        ArrayList<Integer> ans = new ArrayList<Integer>();
+        
+        // create v size visited array or map
+        
+        HashMap< Integer, Boolean  > visited = new HashMap<>();
+        
+        // queue to process node
+        
+        Deque<Integer> q = new LinkedList<>();
+        
+        // step 3: push sorce in q ans mark as visited
+        
+        q.add(0);
+        visited.put(0, true);
+        
+        while( !q.isEmpty()){ // explore graph till grap vertix not end
+        
+           // pop the curr nod of q
+           
+           int temp = q.poll();
+           
+           // put the curr into ans
+           ans.add(temp);
+           
+           
+           // push the next level or neibours nodes in q and mark as visited (if not visited)
+           // 
+           
+           
+           // becasue of collection array
+            for (Integer neighbor : adj.get(temp)) {
+                
+                if (!visited.containsKey(neighbor) || !visited.get(neighbor)) {
+                    
+                    q.add(neighbor);
+                    visited.put(neighbor, true);
+                }
+            }
+            
+            
+        }
+        
+        return ans;
+    }
