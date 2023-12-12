@@ -1,0 +1,45 @@
+
+
+
+
+    public ArrayList<Integer> dfsOfGraph(int V, ArrayList<ArrayList<Integer>> adj) {
+        // Code here
+        
+        ArrayList<Integer> ans = new ArrayList<Integer>();
+        
+        // to visisted array
+        HashMap<Integer,Boolean> visited = new HashMap<>();
+        
+        
+        // push the curr node into the stack
+        dfs(0,adj,visited,ans);
+        
+        return ans;
+        
+        
+        
+    }
+    
+    
+    void dfs(int node, ArrayList<ArrayList<Integer>> adj ,HashMap<Integer,Boolean> visited,  ArrayList<Integer> ans ){
+        
+        
+        // mark current node as visited
+        // ans print the ans
+        
+        visited.put(node, true);
+        ans.add(node);
+        
+        // push current edge new element into stack if not visited
+        // agar key present hai matlab hum visit kar chuke hai
+        
+        for(Integer e: adj.get(node) ){
+            
+            if(!visited.containsKey(e)){
+                
+                dfs(e,adj,visited,ans);
+    
+            }
+        }
+        
+    }
