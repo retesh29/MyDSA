@@ -1,0 +1,80 @@
+static int numProvinces(ArrayList<ArrayList<Integer>> adj, int v) {
+        // code here
+        // using dfs
+        // could be solve by bfs also
+        
+        
+        // step 1: find the adajancy list (becasue adj matrix give)
+        
+        ArrayList<LinkedList<Integer> > adjList = new ArrayList<>(v);
+        
+        for(int i = 0; i < v; i++){
+            
+            adjList.add(new LinkedList<Integer> ());
+        }
+        
+        
+        for(int i =0 ; i < v ; i++){
+            
+            for(int j =0; j < v; j++){
+                
+                if(adj.get(i).get(j) == 1){
+                    
+                    adjList.get(i).add(j);
+                    adjList.get(j).add(i);
+                    
+                    
+                }
+            }
+        }
+        
+        // step2: make visited array
+        
+        int[] visited = new int[v];
+        
+        for(int i =0 ; i < v; i++){
+            
+            visited[i] = 0;
+        }
+        
+        // step 3 : make dfs for every node if not visited
+        
+        int count = 0;
+        for(int i =0; i < v; i++){
+            
+            if(visited[i] == 0){
+                
+                count++;
+                
+                dfs(i, adjList ,visited );
+            }
+        }
+        
+        
+        return count;
+        
+    }
+    
+    // dfs algo
+    
+   static void dfs(int vertix ,ArrayList<LinkedList<Integer> > adjList ,int[] visited){
+        
+        // mark curr as visited
+        visited[vertix] = 1;
+        
+        // add all edges 
+        
+        
+        for(Integer neighbour : adjList.get(vertix) ){
+            
+            
+            if(visited[neighbour] == 0){
+                
+                dfs(neighbour,adjList,visited);
+            }
+        }
+        
+        
+    }
+    
+    
