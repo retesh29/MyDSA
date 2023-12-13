@@ -1,0 +1,98 @@
+class Solution {
+    // using BFS 
+    public int numIslands(char[][] grid) {
+        // Code here
+     //   T= O(N*M)
+     //   S= O(N*M)
+        
+        int n = grid.length;
+        int m = grid[0].length; 
+        
+        // step 1 create visited array
+        
+        int[][] visited = new int[n][m];
+        
+        // step 2 call the bfs if not visited
+        int count =0; 
+        for(int row = 0; row < n ; row++){
+            
+            for(int col =0; col < m ; col++){
+                
+                if(visited[row][col] == 0 && grid[row][col] == '1'){
+                    
+                    count++;
+                    bfs(row , col , grid, visited);
+                }
+            }
+        }
+        
+        return count;
+        
+    }
+    
+    void bfs(int row ,int col,char[][] grid,int[][] visited  ){
+        
+        int n = grid.length;
+        int m = grid[0].length;
+        
+        // mark curr as visited
+        visited[row][col] = 1;
+        
+        Deque<Pair> q = new LinkedList<>();
+        
+        q.add(new Pair(row,col));
+        
+        while( !q.isEmpty()){
+            
+            // poll the elemetn 
+            
+            Pair temp = q.poll();
+            
+            int prow = temp.row;
+            int pcol = temp.col;
+            
+            // travers the neighbours
+            // or push the new level
+            
+            // this is way to find all neighor all the direction
+            for(int delRow = -1; delRow <= 1; delRow++){
+                
+                for(int delCol = -1 ; delCol <= 1; delCol++){
+                    
+                    int neighRow = prow + delRow;
+                    int neighCol = pcol + delCol;
+             //-------------------------------------       
+                    // checking value under grid
+                    if( (neighRow >= 0 && neighRow < n ) && (neighCol >=0 && neighCol < m) ) {
+                        
+                        // if is not visited and have neighbour
+                        
+                        if( visited[neighRow][neighCol] == 0 && grid[neighRow][neighCol] == '1'){
+                            
+                            q.add(new Pair(neighRow,neighCol));
+                            
+                            visited[ neighRow ][ neighCol ] = 1;
+                        }
+                    }
+                }
+            }
+            
+        }
+        
+        
+    }
+    
+    class Pair{
+        
+        int row;
+        int col; 
+        
+        Pair(int row , int col){
+            
+            this.row = row;
+            this.col = col;
+        }
+    }
+    
+    
+}
