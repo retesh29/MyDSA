@@ -1,0 +1,129 @@
+using the BFS
+T =  V + E
+S = V
+
+class Solution
+{
+    //Function to find minimum time required to rot all oranges. 
+    public int orangesRotting(int[][] grid)
+    {
+        // Code here
+        
+        
+        
+        // find the size of grid
+        
+        int n = grid.length;
+        int m = grid[0].length;
+        // make the copu of grid;
+        
+        int[][] visited = new int[n][m];
+
+        for (int i = 0; i < n; i++) {
+            
+            for (int j = 0; j < m; j++) {
+                
+                  visited[i][j] = grid[i][j];
+           }
+        }
+        
+        // step 1 :initial configuraion
+        // push the current rotten orange in q
+        
+        Deque<Info> q = new LinkedList<>();
+        
+        for(int row = 0; row < n; row++){
+            
+            for(int col = 0; col < m; col++){
+                
+                if(grid[row][col] == 2){
+                    
+                    q.add(new Info(row,col,0));
+                    visited[row][col] = 2;
+                }
+            }
+        }
+        
+        // for the finding hte neighbour 4 directin
+        int[] drow = {-1, 0, 1, 0};
+        int[] dcol = { 0, 1, 0,-1};
+        
+        
+        // step 2: make bfs
+        
+        int time = 0;
+        
+        while( !q.isEmpty()){
+            
+            // pop the item
+            
+            Info temp = q.poll();
+            
+            int r = temp.row;
+            int c = temp.col;
+            int ti = temp.time;
+            
+            // update time 
+            time = Math.max(time, ti);
+            
+            // push the neighbour if hava and not visited
+            
+            for(int i = 0; i < 4 ; i++){
+                
+                int nrow = r + drow[i];
+                int ncol = c + dcol[i];
+                
+                
+                // check for under grid
+                
+                if( (nrow < n && nrow >= 0) && ( ncol < m && ncol >= 0) ){
+                    
+                    // check for validation
+                    
+                    if(  (grid[nrow][ncol] == 1) && (visited[nrow][ncol] != 2) ){
+                        
+                        
+                        q.add(new Info(nrow, ncol, ti +1 ));
+                        visited[nrow][ncol] = 2;
+                        
+                        
+                    }
+                }
+            }
+        
+            
+        }
+        
+ 
+    // if all fresh can't to converted into rooten then return -1
+            
+    
+       for(int i = 0; i< n; i++){
+                
+                for(int j = 0; j< m; j++){
+                    
+                    
+                    if( visited[i][j] != 2 && grid[i][j] == 1){
+                        
+                        return -1;
+                    }
+                }
+            }
+            
+        return time;
+    }
+    
+    class Info{
+        
+        int row;
+        int col;
+        int time;
+        
+        Info(int row, int col, int time){
+            
+            this.row = row;
+            this.col = col;
+            this.time = time;
+        }
+    }
+}
