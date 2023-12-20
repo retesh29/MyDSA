@@ -1,0 +1,231 @@
+        // because we need neerest 
+
+
+class Solution
+{
+    //Function to find distance of nearest 1 in the grid for each cell.
+    public int[][] nearest(int[][] grid)
+    {
+        //using the bfs
+        
+        int n = grid.length;
+        int m = grid[0].length;
+        
+        //step 1 create ans grid 
+        int[][] ans = new int[n][m];
+        
+        // create visited array for sa,e
+        
+        boolean[][] visi = new boolean[n][m];
+        
+         // create q and push the 
+        
+        Deque<Pair> q = new LinkedList<>();
+        
+        // push all the 1 elemenent with distanc and marked as visited
+        
+        for(int row =0; row < n; row++){
+            
+            for(int col =0; col < m; col++){
+                
+                if(grid[row][col] == 1){
+                    
+                    visi[row][col] = true;
+                    q.add(new Pair(row,col,0) );
+                    
+                }
+            }
+        }
+        
+        // create the nieghbor maping
+                      //  U   D  R  L  
+        int[] drow = { -1 ,0, 1, 0};
+        int[] dcol = { 0 , 1, +0 ,-1};
+        
+        while( !q.isEmpty()){
+            
+            
+            // pop the item and push teh all nighour
+            Pair temp = q.poll();
+            
+            int row = temp.r;
+            int col = temp.c;
+            int dis = temp.d;
+            
+            // add the ans;
+            
+            ans[row][col] = dis;
+            
+            // going to neigher and ching for 1 
+            
+            for(int i =0; i < 4 ; i++){
+                
+               int  nrow = row + drow[i];
+               int  ncol =  col + dcol[i];
+                
+                //chcking for validation
+                
+                if(nrow < n && nrow >= 0 && ncol < m && ncol >= 0){
+                    
+                    if( !visi[nrow][ncol] ){
+                        
+                        visi[nrow][ncol] = true;
+                        q.add( new Pair(nrow, ncol, dis +1) );
+                    }
+                
+                
+                }
+            }
+            
+        }
+        
+        return ans;
+        
+    }
+    
+    class Pair{
+        
+        int r;
+        int c;
+        int d; // distanc // level
+        
+        Pair(int r, int c,int d){
+            
+            this.r = r;
+            this.c = c;
+            this.d = d;
+        }
+        
+    }
+    
+    
+    
+}
+
+
+=======================================
+// brute force
+
+
+class Solution
+{
+    //Function to find distance of nearest 1 in the grid for each cell.
+    public int[][] nearest(int[][] grid)
+    {
+        //using the bfs
+        // because we need neerest 
+        
+        int n = grid.length;
+        int m = grid[0].length;
+        
+        //step 1 create ans grid 
+        int[][] ans = new int[n][m];
+        
+        // make bfs for every 0 cell
+        
+        for(int row =0; row < n; row++){
+            
+            for(int col =0; col < m; col++){
+                
+                if(grid[row][col] == 0){
+                    
+                    bfs(new Pair(row,col,0),grid,ans);
+                }else{
+                    
+                    ans[row][col] = 0;
+                }
+            }
+        }
+        return ans;
+    }
+    
+    void bfs(Pair v, int[][] grid, int[][] ans){
+        
+        int n = grid.length;
+        int m = grid[0].length;
+        
+        // create visited array for sa,e
+        
+        boolean[][] visi = new boolean[n][m];
+        
+        visi[v.r][v.c] = true;
+        
+        // create the nieghbor maping
+                      //  U   D  R  L  
+        int[] drow = { -1 ,1 , 0, 0};
+        int[] dcol = { 0 , 0, +1 ,-1};
+        
+        // create q and push the 
+        
+        Deque<Pair> q = new LinkedList<>();
+        
+        q.add(v);
+        
+        while( !q.isEmpty()){
+            
+            
+            // pop the item and push teh all nighour
+            Pair temp = q.poll();
+            
+            int row = temp.r;
+            int col = temp.c;
+            int dis = temp.d;
+            
+            // going to neigher and ching for 1 
+            
+            for(int i =0; i < 4 ; i++){
+                
+               int  nrow = row + drow[i];
+               int  ncol =  col + dcol[i];
+                
+                //chcking for validation
+                
+                if(nrow < n && nrow >= 0 && ncol < m && ncol >= 0){
+                    
+                    
+                    if(grid[nrow][ncol] == 1){
+                    
+                       ans[v.r][v.c] = dis + 1;
+                       return;
+                
+                    
+                    }else if( !visi[nrow][ncol] ) { // process k liye q mai push kardo
+                    
+                        visi[nrow][ncol] = true;
+                        
+                        q.add( new Pair( nrow, ncol, dis + 1));
+                    
+                   }
+                
+                }
+            
+
+                
+            }
+            
+            
+            
+            
+        }
+        
+    }
+    
+    class Pair{
+        
+        int r;
+        int c;
+        int d; // distanc // level
+        
+        Pair(int r, int c,int d){
+            
+            this.r = r;
+            this.c = c;
+            this.d = d;
+        }
+        
+    }
+    
+    
+    
+}
+
