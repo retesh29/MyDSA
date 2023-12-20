@@ -1,0 +1,180 @@
+// by DFS( T&S)  // also check for bfs 
+class Solution {
+    // Function to detect cycle in an undirected graph.
+    public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
+        // using the bfs 
+        
+        
+        
+        // we have given adjancy list
+        // step1 ; create visited array
+        
+        boolean[] visited = new boolean[V];
+        
+        
+        // bfs traversal 
+        for(int i =0; i < V ; i++){
+            
+            if( !visited[i]){
+                
+                // if cycle return true;
+                if( dfs(new Pair(i,-1),adj,visited)) return true;
+            }
+        }
+        
+        return false;
+
+        
+    }
+    
+    boolean dfs(Pair v, ArrayList<ArrayList<Integer>> adj, boolean[] visited  ){
+        
+        
+        // step 1 : make vertix is visited 
+        
+        visited[v.v] = true;
+           
+                // here is check condition for cycle
+            // if there is cycle then parent will be differnt and node will be visited
+            
+            // if not cycle than means neighbor so push the q
+            
+            
+            for(Integer neighbor: adj.get(v.v)){
+                
+                
+                // check for cycle
+                if( !visited[neighbor] ){ // unvisited 
+                    
+                         if(dfs(new Pair(neighbor, v.v) , adj, visited)) return true;
+                    
+                }else if( neighbor != v.parent ){ // visited and not parent 
+                    
+                    return true;
+                    
+                }
+            }
+        
+        
+        return false;
+        
+        
+
+    }
+    
+    class Pair{
+        
+        int v;
+        int parent;
+        
+        Pair( int v , int parent){
+            
+            this.v = v;
+            this.parent = parent;
+        }
+        
+    }
+    
+    
+
+}
+
+----------------------------------------------------------------------------
+
+// using the BFS(T&S) 
+
+class Solution {
+    // Function to detect cycle in an undirected graph.
+    public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
+        // using the bfs 
+        
+        
+        
+        // we have given adjancy list
+        // step1 ; create visited array
+        
+        boolean[] visited = new boolean[V];
+        
+        
+        // bfs traversal 
+        for(int i =0; i < V ; i++){
+            
+            if( !visited[i]){
+                
+                // if cycle return true;
+                if( bfs(i,adj,visited)) return true;
+            }
+        }
+        
+        return false;
+
+        
+    }
+    
+    boolean bfs(int v, ArrayList<ArrayList<Integer>> adj, boolean[] visited  ){
+        
+        
+        // step 1 : make vertix is visited 
+        
+        visited[v] = true;
+        
+        // add curr vertix in the q and ther parent
+        
+        Deque<Pair> q = new LinkedList();
+        
+        q.add( new Pair(v,-1));
+        
+        while( !q.isEmpty()){
+            
+            // poll the q elemetn 
+            
+            Pair temp = q.poll();
+            
+            int node = temp.v;
+            int parent = temp.parent;
+            
+            // here is check condition for cycle
+            // if there is cycle then parent will be differnt and node will be visited
+            
+            // if not cycle than means neighbor so push the q
+            
+            
+            for(Integer neighbor: adj.get(node)){
+                
+                
+                // check for cycle
+                if( !visited[neighbor] ){ // unvisited 
+                    
+                        q.add( new Pair(neighbor, node ));
+                        visited[neighbor] = true;
+                    
+                }else if( neighbor != parent ){ // visited and not parent 
+                    
+                    return true;
+                    
+                }
+            }
+        }
+        
+        return false;
+        
+        
+
+    }
+    
+    class Pair{
+        
+        int v;
+        int parent;
+        
+        Pair( int v , int parent){
+            
+            this.v = v;
+            this.parent = parent;
+        }
+        
+    }
+    
+    
+
+}
