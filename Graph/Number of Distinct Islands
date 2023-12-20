@@ -1,0 +1,38 @@
+class Solution {
+     void dfs(int row, int col, boolean[][] visi, int[][] grid, StringBuilder ptr, int baseR, int baseC) {
+        int n = grid.length;
+        int m = grid[0].length;
+        visi[row][col] = true;
+        ptr.append(Integer.toString(row - baseR));
+        ptr.append(Integer.toString(col - baseC));
+        int[] dr = {-1, 0, 1, 0};
+        int[] dc = {0, 1, 0, -1};
+        for (int i = 0; i < 4; i++) {
+            int nrow = row + dr[i];
+            int ncol = col + dc[i];
+            if (nrow >= 0 && nrow < n && ncol >= 0 && ncol < m) {
+                if (!visi[nrow][ncol] && grid[nrow][ncol] == 1) {
+                    dfs(nrow, ncol, visi, grid, ptr, baseR, baseC);
+                }
+            }
+        }
+    }
+
+    int countDistinctIslands(int[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+        boolean[][] visi = new boolean[n][m];
+        HashSet<String> set = new HashSet<>();
+        for (int row = 0; row < n; row++) {
+            for (int col = 0; col < m; col++) {
+                if (!visi[row][col] && grid[row][col] == 1) {
+                    StringBuilder ptr = new StringBuilder();
+                    dfs(row, col, visi, grid, ptr, row, col);
+                    set.add(ptr.toString());
+                }
+            }
+        }
+        return set.size();
+    }
+
+}
