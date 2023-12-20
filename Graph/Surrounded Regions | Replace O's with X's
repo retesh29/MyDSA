@@ -1,0 +1,105 @@
+
+
+        // usng the dfs
+
+class Solution{
+    static char[][] fill(int n, int m, char a[][])
+    {
+        
+        // here logic is if O at border than you can' tconvert
+        // O to x thir connect O
+        // otherthan you can do
+        
+        
+        //step1 take visited array && nieboor maping for dfs call
+        
+        
+        boolean[][] visi = new boolean[n][m];
+        
+        int[] drow = { -1 , 0 ,1, 0};
+        int[] dcol = { 0, 1,0, -1 };
+        
+        // step 2 make dfs call if o is part of bouder 
+        
+        
+        //for top and down boundery
+        //and for o only
+        
+        for(int i = 0; i < m ; i++ ){
+            
+            // top
+            if( !visi[0][i] && a[0][i] == 'O' ){
+                
+                 dfs( 0, i, a, visi,drow, dcol );
+            }
+            //down
+            if(!visi[n-1][i] && a[n-1][i] == 'O' ){
+                
+                 dfs( n-1, i, a, visi,drow, dcol );
+            }
+        }
+        
+        // for the lef and right
+        for(int i = 0; i < n ; i++ ){
+            
+            // left
+            if( !visi[i][0] && a[i][0] == 'O' ){
+                
+                 dfs( i, 0, a, visi,drow, dcol );
+            }
+            //right
+            if(!visi[i][m-1] && a[i][m-1] == 'O' ){
+                
+                 dfs( i, m-1, a, visi,drow, dcol );
+            }
+        }
+        
+        // check for non boundery unvisted element
+        for(int row = 0; row < n; row++ ){
+            
+            for(int col = 0; col < m ; col++){
+                
+                if( !visi[row][col] && a[row][col] == 'O' ){
+                    
+                    a[row][col] = 'X';
+                }
+            }
+        }
+        
+        return a;
+        
+    }
+    
+    static void dfs(int row, int col, char a[][],  boolean[][] visi, int[] drow, int[] dcol   ){
+        
+        int n = a.length;
+        int m = a[0].length;
+        // mark as visited
+        visi[row][col] = true;
+        
+        // call for nieghbour
+        
+        for(int i =0 ; i < 4; i++){
+            
+            int nrow = row + drow[i];
+            int ncol = col + dcol[i];
+            
+            
+            // is valid idex
+            if( nrow < n && nrow >= 0 && ncol < m && ncol >= 0 ){
+                
+                // is it visisted
+                if( !visi[nrow][ncol] && a[nrow][ncol] == 'O') {
+                    
+                    dfs( nrow, ncol, a, visi,drow, dcol );
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
