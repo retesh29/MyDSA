@@ -1,0 +1,124 @@
+//using the bfs
+class Solution {
+
+    int numberOfEnclaves(int[][] grid) {
+
+        //using the bfs
+        
+        int n = grid.length;
+        int m = grid[0].length;
+        
+        boolean[][] visi = new boolean[n][m];
+        
+        Deque<Pair> q = new LinkedList<>();
+        
+        //push all boundry land
+        
+        for(int i =0 ; i < n ; i++){
+            
+            // left
+            
+            if( grid[i][0] == 1 && !visi[i][0]){
+                
+                q.add(new Pair(i,0));
+                visi[i][0] = true;
+            }
+            
+            // right
+            
+            if( grid[i][m-1] == 1 && !visi[i][m-1]){
+                
+                q.add(new Pair(i,m-1));
+                visi[i][m-1] = true;                
+            }
+        }
+        
+        for(int i=0 ; i < m ; i++){
+            
+            // top 
+            if( grid[0][i] == 1 && !visi[0][i]){
+               
+                q.add(new Pair(0,i));
+                visi[0][i] = true;
+                
+            }
+            
+            
+            // down
+            
+            if( grid[n-1][i] == 1 && ! visi[n-1][i]){
+               
+                q.add(new Pair(n-1,i));
+                visi[n-1][i] = true;
+            }
+        }
+        
+        // neigbor indexing
+        int[] dr = { -1, 0, 1, 0 };
+        int[] dc = { 0 , 1, 0, -1};
+        
+        
+        // process q
+        
+        while( !q.isEmpty()){
+            
+            // poll
+            Pair temp = q.poll();
+            
+            int row = temp.row;
+            int col = temp.col;
+            
+            // push
+            
+            for(int i = 0; i < 4 ; i++){
+                
+                int nrow = row + dr[i];
+                int ncol = col + dc[i];
+                
+                
+                // check for validatin of index
+                
+                if(nrow < n && nrow >=0 && ncol < m && ncol >= 0){
+                    
+                    
+                    if( !visi[nrow][ncol] && grid[nrow][ncol] == 1 ){
+                        
+                        q.add(new Pair(nrow, ncol));
+                        visi[nrow][ncol] = true;
+                    }
+                } 
+            }
+            
+            
+        }
+        // kaam ho chuka hai bus counting karna hai
+        
+        int count = 0;
+        
+        for(int row = 0 ; row < n ; row ++){
+            
+            for(int col =0; col <m ; col++){
+                
+                if( !visi[row][col] && grid[row][col] == 1 ){
+                    
+                    count++;
+                }
+            }
+        }
+        
+        return count;
+        
+    }
+    
+    class Pair{
+        
+        int row;
+        int col;
+        
+        Pair(int row, int col){
+            
+            this.row = row;
+            this.col = col;
+        }
+    }
+}
