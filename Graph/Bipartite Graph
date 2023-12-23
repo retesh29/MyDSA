@@ -1,0 +1,170 @@
+class Solution
+{
+    public boolean isBipartite(int V, ArrayList<ArrayList<Integer>>adj)
+    {
+        //using the bfs
+        
+        
+        
+        
+        int[] color = new int[V];
+        
+        // initilize color to no color
+        
+        for(int i =0; i < color.length ; i++){
+            
+            color[i] = -1;
+        }
+        
+       for(int i =0; i < V ; i++){ 
+           
+           if(color[i] == -1){ 
+               
+               if( ! check(i, adj,color )){
+                   return false; 
+                   
+               } 
+               
+           } 
+           
+       } 
+        
+        
+        return true;
+    }
+    
+    boolean check(int v,ArrayList<ArrayList<Integer>>adj, int[] color ){
+        
+        // start bfs
+        Deque<Integer> q = new LinkedList<>();
+        
+        
+        color[v] = 0;
+        q.add(v);
+        
+        while( ! q.isEmpty()){
+            
+            
+            // pop and the element and color the neighbour
+            
+            int node = q.poll();
+            
+            
+            for(Integer neigh: adj.get( node )){
+                
+                
+                // fill the adj node color 
+                // if filled check neighbour is same or different 
+                
+                if(color[neigh] == -1){
+                    
+                    if(color[node] == 0){
+                        
+                        color[neigh] = 1;
+                    }else{
+                        
+                        color[ neigh] = 0;
+                    }
+                    
+                    q.add(neigh);
+                
+                    
+                    // adj is same color
+                }else if( color[neigh] == color[node]){
+                    
+                    return false;
+                }
+            }
+        }
+
+
++++++++++++++++++++++
+// by dfs
+
+
+class Solution
+{
+    public boolean isBipartite(int V, ArrayList<ArrayList<Integer>>adj)
+    {
+        //using the bfs
+        
+        
+        
+        
+        int[] color = new int[V];
+        
+        // initilize color to no color
+        
+        for(int i =0; i < color.length ; i++){
+            
+            color[i] = -1;
+        }
+        
+       for(int i =0; i < V ; i++){ 
+           
+           if(color[i] == -1){ 
+               
+               if( ! check(i,0, adj,color )){
+                   return false; 
+                   
+               } 
+               
+           } 
+           
+       } 
+        
+        
+        return true;
+    }
+    
+    boolean check(int v,int rang , ArrayList<ArrayList<Integer>>adj, int[] color ){
+        
+        // start dfs
+        color[v] = rang;
+        
+         
+            for(Integer neigh: adj.get( v )){
+                
+                
+                // fill the adj node color 
+                // if filled check neighbour is same or different 
+                
+                if(color[neigh] == -1){
+                    
+                    if(color[v] == 0){
+                        
+                        if( !check(neigh,1, adj,color ) ){
+                            
+                            return false;
+                        }
+                        
+                    }else{
+                        
+                        if( !check(neigh,0, adj,color ) ){
+                            
+                            return false;
+                        }
+                    }
+    
+                    // adj is same color
+                }else if( color[neigh] == color[v]){
+                    
+                    return false;
+                }
+            }
+      
+        return true;
+        
+    }
+    
+    
+}
+        
+        
+        
+        return true;
+        
+    }
+    
+    
+}
