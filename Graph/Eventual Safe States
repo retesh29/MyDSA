@@ -1,0 +1,79 @@
+
+class Solution {
+
+    List<Integer> eventualSafeNodes(int V, List<List<Integer>> adj) {
+        // using the dfs
+        // T = O(V+E)
+        // S = (V)
+        
+        // note : it is using adjancy list
+        
+        // step 1 create all data strucher 
+                
+        
+        boolean[] visi = new boolean[V];
+        boolean[] path = new boolean[V];
+        boolean[] check = new boolean[V];
+        List<Integer> safeNode = new ArrayList<>();
+        
+        
+        // step2 traverse for all component 
+        
+        for(int e = 0; e < V; e++){
+            
+            if(!visi[e]){
+                
+                dfs(e,adj,visi, path, check);
+            }
+        }
+        
+        for(int i = 0; i < V ; i++){
+            
+            if(check[i]){
+                
+                safeNode.add(i);
+            }
+        }
+        
+        return safeNode;
+    }
+    
+    boolean dfs(int v , List<List<Integer>> adj, boolean[] visi, boolean[] path, boolean[] check){
+        
+        // step 1 mark as visitid and make part of path
+        
+        visi[v] = true;
+        path[v] = true;
+        
+        // step 2 call for neighbout
+        
+        for( Integer neig : adj.get(v) ){
+            
+            
+            if( !visi[neig]){ // not visited
+                
+                if(dfs(neig,adj,visi, path, check)){
+                    
+                    return true;
+                }
+            
+                // have cycle so retunrn
+            }else if( path[neig] ){
+                
+                
+                return true;
+            }
+            
+        }
+        
+        // if you are here means you don't have cycle
+        // so you are returning so mark check as true 
+        check[v] = true;
+        path[v] = false;
+        return false;
+   
+        
+    }
+}
+
+=================================================================
