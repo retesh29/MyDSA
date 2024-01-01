@@ -1,0 +1,62 @@
+
+class Solution {
+    // Function to detect cycle in a directed graph.
+    public boolean isCyclic(int V, ArrayList<ArrayList<Integer>> adj) {
+        // using the dfs
+        // T = O(V+E)
+        // S = (V)
+        
+        // note : it is using adjancy list
+        
+        // step 1 create all data strucher 
+        
+        boolean[] visi = new boolean[V];
+        boolean[] path = new boolean[V];
+        
+        
+        // step2 traverse for all component 
+        
+        for(int e = 0; e < V; e++){
+            
+            if(!visi[e]){
+                
+                if(dfs(e,adj,visi, path)) return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    boolean dfs(int v ,ArrayList<ArrayList<Integer>> adj, boolean[] visi, boolean[] path  ){
+        
+        // step 1 mark as visitid and make part of path
+        
+        visi[v] = true;
+        path[v] = true;
+        
+        // step 2 call for neighbout
+        
+        for(Integer neig : adj.get(v)){
+            
+            if(!visi[neig]){ // new elemetn
+                
+                 if(dfs(neig, adj, visi, path)){
+                     
+                     return true;
+                 }
+            
+            
+            // element is visited and path also visited 
+            // it is a part of dfs current call 
+                
+            }else if( path[neig]){
+                
+                return true;
+            }
+        }
+        
+        path[v] = false;
+        return false;
+        
+    }
+}
