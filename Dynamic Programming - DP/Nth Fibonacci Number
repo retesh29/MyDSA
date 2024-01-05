@@ -1,0 +1,108 @@
+//User function Template for Java
+class Solution {
+    static int nthFibonacci(int n){
+        // using the dp + recurio then dp tabulation
+        
+        
+        // step 1: make memoition
+        int[] dp = new int[n+1];
+        for(int i =0; i < n+1; i++){
+            
+            dp[i] = -1;
+        }
+        
+        return fibo(n, dp);
+    }
+    
+    static int fibo(int n, int[] dp){
+        
+        // base case
+        if( n <= 1){
+            return n;
+        }
+        // step 2: check befor call in memory 
+        if(dp[n] != -1){
+            
+            return dp[n];
+        }
+        
+        //step3: store the ans in memorition
+        
+        return dp[n] = ( fibo(n-1 , dp) + fibo( n-2, dp) ) % 1000000007;
+    }
+}
+
+===============================
+
+
+
+
+//User function Template for Java
+
+//User function Template for Java
+class Solution {
+    static int nthFibonacci(int n){
+        // converting td to bu
+        
+        
+        
+        
+        // step 1: make memoition
+        int[] dp = new int[n+1];
+        for(int i =0; i < n+1; i++){
+            
+            dp[i] = -1;
+        }
+        
+        //step 2: assign base in memeory
+        dp[0] =0 ;
+        dp[1] = 1;
+        
+        //step 3: assign for remaingi
+        
+        for(int i = 2; i < n+1; i++){
+            
+            dp[i] = ( dp[i-1] + dp[i-2] ) % 1000000007;
+        }
+        
+        return dp[n];
+        
+    }
+    
+    
+}
+
+==================================
+
+
+
+//User function Template for Java
+
+//User function Template for Java
+class Solution {
+    static int nthFibonacci(int n){
+        // now optimnize the space
+        
+        
+       // step 1 assign the base casae
+        int pre2 = 0 ;
+        int pre = 1;
+        
+        //step 2: assign for remaingi
+        
+        for(int i = 2; i < n+1; i++){
+            
+            int curr = ( pre + pre2 ) % 1000000007;
+            
+            //step 3 ; update hte pre and pre2
+            
+            pre2 = pre;
+            pre = curr;
+        }
+        
+        return pre ;
+        
+    }
+    
+    
+}
