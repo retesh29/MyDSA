@@ -1,0 +1,148 @@
+//Bu with space optimization
+public static int frogJump(int n, int heights[]) {
+
+
+        // step 1; inilitze base case in dp array
+       int pre = 0;
+       int pre2 = 0;
+
+        for(int i = 1; i < n; i++){
+
+            int f = pre + Math.abs(heights[i]- heights[i-1]);
+            
+            int s = Integer.MAX_VALUE;
+
+            if(i>1){
+
+                s = pre2 + Math.abs(heights[i]- heights[i-2]);
+            }
+
+            int curr = Math.min(f, s);
+
+            pre2 = pre;
+            pre = curr;
+        }
+
+
+        return pre;
+    }
+
+++++++++++++++++++++++++++++++
+
+// dp bottom up
+
+public static int frogJump(int n, int heights[]) {
+
+        //recurion
+        int[] dp = new int[n];
+
+        
+         
+        // step 1; inilitze base case in dp array
+        dp[0] = 0;
+
+        for(int i = 1; i < n; i++){
+
+            int f = dp[i-1] + Math.abs(heights[i]- heights[i-1]);
+            
+            int s = Integer.MAX_VALUE;
+
+            if(i>1){
+
+                s = dp[i-2] + Math.abs(heights[i]- heights[i-2]);
+            }
+
+            dp[i] = Math.min(f, s);
+        }
+
+
+        return dp[n-1];
+    }
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+// dp top down
+public class Solution {
+    public static int frogJump(int n, int heights[]) {
+
+        //recurion
+        int[] dp = new int[n+1];
+
+        for(int i =0; i <= n; i++){
+
+            dp[i] = -1;
+        }
+
+        return solve( n-1, dp, heights);
+    }
+
+    static int solve(int jump , int[] dp, int heights[]){
+
+        // base case
+
+        if(jump == 0){
+
+            return 0;
+        }
+
+        if(dp[jump] != -1){
+
+            return dp[jump];
+        }
+
+        int left = solve(jump - 1 ,dp, heights) + Math.abs(heights[jump]- heights[jump - 1]);
+         
+        int right = Integer.MAX_VALUE;
+        
+        if (jump > 1  ){
+            
+            right = solve( jump - 2 ,dp,  heights ) + Math.abs(heights[jump] - heights[jump - 2] );
+
+        }
+       
+        return dp[jump] = Math.min( left, right);
+
+        
+
+
+    }
+
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// recurion
+public class Solution {
+    public static int frogJump(int n, int heights[]) {
+
+        //recurion
+
+        return solve( n-1, heights);
+    }
+
+    static int solve(int jump , int heights[]){
+
+        // base case
+
+        if(jump == 0){
+
+            return 0;
+        }
+
+        int left = solve(jump - 1 , heights) + Math.abs(heights[jump]- heights[jump - 1]);
+         
+        int right = Integer.MAX_VALUE;
+        
+        if (jump > 1  ){
+            
+            right = solve( jump - 2 , heights ) + Math.abs(heights[jump] - heights[jump - 2] );
+
+        }
+       
+        return Math.min( left, right);
+
+        
+
+
+    }
+
+}
