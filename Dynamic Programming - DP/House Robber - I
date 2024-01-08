@@ -1,0 +1,102 @@
+// or Maximum Sum of Non-Adjacent Elements
+
+
+// space oprimazion converion do your self
+
+t =O (N);
+S = O (N);
+// bottom up
+public class Solution {
+
+	public static int maximumNonAdjacentSum(ArrayList<Integer> nums) {
+	
+		int[] dp = new int[nums.size()];
+		
+		// base case inilziaiton
+		dp[0] = nums.get(0);
+		
+
+		for(int i = 1 ; i < dp.length; i++){
+             
+			 int pick = nums.get(i);
+			 if( i > 1){
+
+                pick += dp[i -2];
+			 }
+			 
+			int notpick =  0 + dp[i -1 ];  
+			 
+
+			 dp[i] = Math.max(pick, notpick) ;
+		
+		     
+		}
+
+		return dp[dp.length- 1];
+	}
+
+}
+
+=================================
+// using top down
+
+
+public class Solution {
+	public static int maximumNonAdjacentSum(ArrayList<Integer> nums) {
+		// Write your code here.
+		int[] dp = new int[nums.size()];
+		for(int i =0; i < dp.length; i++){
+
+			dp[i] = -1;
+		}
+
+		return f(nums.size()-1 , nums, dp);
+	}
+
+	static int f(int idx,ArrayList<Integer> nums,int[] dp  ){
+
+		// base 
+
+		if( idx == 0 ) return nums.get(idx);
+		if( idx < 0 ) return 0;
+		if( dp[idx] != -1) return dp[idx];
+
+		int pick = nums.get(idx) + f(idx -2 , nums, dp);
+		int notpick =  0 + f(idx -1 , nums, dp);
+
+		return dp[idx] = Math.max(pick,notpick);
+	}
+}
+
+
+================================================================
+
+// by recursion
+
+
+public class Solution {
+	public static int maximumNonAdjacentSum(ArrayList<Integer> nums) {
+		// Write your code here.
+		int[] dp = new int[nums.size()];
+		for(int i =0; i < dp.length; i++){
+
+			dp[i] = -1;
+		}
+
+		return f(nums.size()-1 , nums, dp);
+	}
+
+	static int f(int idx,ArrayList<Integer> nums,int[] dp  ){
+
+		// base 
+
+		if( idx == 0 ) return nums.get(idx);
+		if( idx < 0 ) return 0;
+		if( dp[idx] != -1) return dp[idx];
+
+		int pick = nums.get(idx) + f(idx -2 , nums, dp);
+		int notpick =  0 + f(idx -1 , nums, dp);
+
+		return Math.max(pick,notpick);
+	}
+}
