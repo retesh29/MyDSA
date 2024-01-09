@@ -1,0 +1,275 @@
+// space opitmize 
+T= O(n);
+S = O(1)
+class Solution{
+    public int maximumPoints(int points[][],int N){
+        // DP :  bottom - up 
+        
+        // step 1: create dp array
+        
+        // you need 4 length size of array becasue we are strig
+        // form the 0 -  3 trainnig  
+        int[] prev = new int[4];
+        for(int i = 0; i < 4; i ++){
+            
+             prev[i] = -1;
+        }
+        
+        // step 2: initoilize dp array with base case
+        // there is 4 bse case if we left the last task
+        
+        
+        prev[0] = Math.max ( points[0][1] , points[0][2]); // 0 : max in 1, 2
+        prev[1] = Math.max ( points[0][0] , points[0][2]);
+        prev[2] = Math.max ( points[0][0] , points[0][1]);
+        prev[3] = Math.max ( points[0][0] , Math.max ( points[0][1], points[0][2] ) );  // 3 : no task is performed so we have 0 , 2 , 3 task and max 
+         
+         
+        // step 3 : start loop accoursing the base
+            
+        for(int day = 1; day < N; day++){ // have only 3 trainging
+               
+             int[] temp = new int[4];
+             for(int i = 0; i < 4; i ++){
+             
+                   temp[i] = -1;
+             }
+            
+            
+            for(int lastTask = 0 ; lastTask < 4; lastTask++){
+                
+               for(int task = 0; task < 3; task++){ // have only 3 trainging
+               
+                   if( task != lastTask ){
+                      
+                       int maxi = points[day][task] + prev[task];
+            
+                        temp[lastTask] = Math.max(temp[lastTask], maxi);
+                        
+                   }
+               }
+
+            }
+        
+            prev = temp;    
+        }
+        
+        
+       return prev[3]; // 
+    }
+    
+   
+    
+}
+
+
+========================
+
+        // DP :  bottom - up 
+T= O(n);
+S = O(n)
+
+
+class Solution{
+    public int maximumPoints(int points[][],int N){
+        
+        // step 1: create dp array
+        
+        // you need 4 length size of array becasue we are strig
+        // form the 0 -  3 trainnig  
+        int[][] dp = new int[N][4];
+        for(int i = 0; i < N; i ++){
+            
+            for(int j =0; j < 4; j++){
+                
+                dp[i][j] = -1;
+            }
+        }
+        
+        // step 2: initoilize dp array with base case
+        // there is 4 bse case if we left the last task
+        
+        
+        dp[0][0] = Math.max ( points[0][1] , points[0][2]); // 0 : max in 1, 2
+        dp[0][1] = Math.max ( points[0][0] , points[0][2]);
+        dp[0][2] = Math.max ( points[0][0] , points[0][1]);
+        dp[0][3] = Math.max ( points[0][0] , Math.max ( points[0][1], points[0][2] ) );  // 3 : no task is performed so we have 0 , 2 , 3 task and max 
+         
+         
+        // step 3 : start loop accoursing the base
+            
+        for(int day = 1; day < N; day++){ // have only 3 trainging
+               
+            
+            for(int lastTask = 0 ; lastTask < 4; lastTask++){
+                
+               for(int task = 0; task < 3; task++){ // have only 3 trainging
+               
+                   if( task != lastTask ){
+                      
+                       int maxi = points[day][task] + dp[day-1][task];
+            
+                        dp[day][lastTask] = Math.max(dp[day][lastTask], maxi );
+                        
+                   }
+               }
+                
+            }
+        
+                
+        }
+        
+        
+       return dp[N-1][3]; // trainging yet
+    }
+    
+   
+    
+    
+}
+
+
+
+
+===============================
+        // DP : Top down
+T= O(n);
+S = O(n)
+
+class Solution{
+    public int maximumPoints(int points[][],int N){
+        
+        // step 1: create dp array
+        
+        // you need 4 length size of array becasue we are strig
+        // form the 0 -  3 trainnig  
+        int[][] dp = new int[N][4];
+        for(int i = 0; i < N; i ++){
+            
+            for(int j =0; j < 4; j++){
+                
+                dp[i][j] = -1;
+            }
+        }
+        
+       return f(N-1,3, points,dp); // trainging yet
+    }
+    
+    int f(int day, int lastTask, int points[][], int[][] dp){
+        
+        // base case
+        // last day per ho and max in last traning 
+        
+        if( day == 0){
+            
+            int maxPoint = Integer.MIN_VALUE;
+            
+            for(int task = 0; task < 3; task++){ // have only 3 trainging
+               
+               if( task != lastTask ){
+                   
+                   maxPoint = Math.max( maxPoint, points[0][task]);
+               }
+                
+            }
+            
+            return maxPoint;
+        }
+        
+        // step 2: checking overlapioing sub problem
+        
+        if( dp[day][lastTask] != -1){
+                     
+                     
+            return dp[day][lastTask];
+            
+         }
+                   
+        
+        
+        
+        // perfor all acitive for the day and find max of them
+        
+         int maxPoint = Integer.MIN_VALUE;
+            
+         for(int task = 0; task < 3; task++){ // have only 3 trainging
+               
+             if( task != lastTask ){
+                 
+                  int maxi = points[day][task] + f( day -1 ,task, points, dp);
+                  // max in out of 3 traning
+                  
+                  
+                  maxPoint = Math.max(maxPoint, maxi );
+               }
+                
+          }
+        
+       
+        
+        return  dp[day][lastTask] = maxPoint; 
+            
+            
+    }
+    
+}
+
+============================================
+
+
+// recursion
+//    T &s= 3^N
+
+class Solution{
+    public int maximumPoints(int points[][],int N){
+        // recursion
+
+        
+       return f(N-1,3, points); // trainging yet
+    }
+    
+    int f(int day, int lastTask, int points[][] ){
+        
+        // base case
+        // last day per ho and max in last traning 
+        
+        if( day == 0){
+            
+            int maxPoint = Integer.MIN_VALUE;
+            
+            for(int task = 0; task < 3; task++){ // have only 3 trainging
+               
+               if( task != lastTask ){
+                   
+                   maxPoint = Math.max( maxPoint, points[0][task]);
+               }
+                
+            }
+            
+            return maxPoint;
+        }
+        
+        // perfor all acitive for the day and find max of them
+        
+         int maxPoint = Integer.MIN_VALUE;
+            
+         for(int task = 0; task < 3; task++){ // have only 3 trainging
+               
+             if( task != lastTask ){
+                   
+                  int maxi = points[day][task] + f( day -1 ,task, points);
+                  // max in out of 3 traning
+                  
+                  maxPoint = Math.max(maxPoint, maxi );
+               }
+                
+          }
+            
+        return maxPoint;
+            
+            
+    }
+    
+    
+    
+}
