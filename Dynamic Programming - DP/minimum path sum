@@ -1,0 +1,125 @@
+bottom up
+
+
+class Solution {
+    public int minPathSum(int[][] grid) {
+         int n = grid.length ;
+         int m = grid[0].length;
+
+        int[][] dp = new int[n][m];
+        for(int i =0; i < n; i++){
+
+            for(int j =0; j < m; j++){
+
+                dp[i][j] = -1;
+            }
+        }
+
+    // step 2 : base case iniliziton
+
+    dp[n-1][m-1] = grid[n-1][m-1];
+
+    // start loop according base case
+
+    for(int r = n-1 ; r >=0 ; r--){
+
+        for(int c = m-1; c >=0 ; c--){
+
+            // skil base case
+
+            if( r == n-1 && c == m-1){
+
+                continue;
+            }
+
+            // step 3 : recurison relation to dp array
+
+
+            // down
+
+            int down = (int) 1e9;
+
+            int right = (int) 1e9;
+
+
+            if(r < n -1){ // if part of grid
+               
+
+               down = grid[r][c] +  dp[r+1][c];
+
+            }
+
+            //right
+
+            if( c < m-1){
+
+                right = grid[r][c] + dp[r][c+1];
+
+
+            }
+
+            dp[r][c] = Math.min(right, down);
+        }
+    }
+
+    return dp[0][0];
+
+        
+    }
+}
+
+
++++++++++++++++++++++++++++++++++++
+
+// top down 
+n*m
+class Solution {
+    public int minPathSum(int[][] grid) {
+         int n = grid.length ;
+        int m = grid[0].length;
+
+        int[][] dp = new int[n][m];
+        for(int i =0; i < n; i++){
+
+            for(int j =0; j < m; j++){
+
+                dp[i][j] = -1;
+            }
+        }
+
+        return pathSum(0,0,grid,dp);
+    }
+
+    int pathSum(int r, int c,int[][] grid,int[][] dp  ){
+
+        // base case
+        int n = grid.length ;
+        int m = grid[0].length;
+
+
+         if( r == n -1 && c == m-1 ){
+
+            return grid[n-1][m-1];
+        }
+
+        if( r < 0 || c < 0 || r >= n || c >= m ){
+
+            return (int) 1e9;
+        }
+
+        if( dp[r][c] != -1){
+
+            return dp[r][c];
+        }
+
+        // all coice
+
+        int right = grid[r][c] + pathSum(r,c +1 , grid, dp);
+        int down = grid[r][c] + pathSum(r+1,c, grid, dp);
+
+
+        return dp[r][c] = Math.min(right,down);
+
+    }
+    
+}
