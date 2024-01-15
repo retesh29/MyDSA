@@ -1,0 +1,146 @@
+Minimum/Maximum Falling Path Sum
+// for positive intiger only'
+
+
+bottom up 
+
+
+
+class Solution{
+    static int maximumPath(int N, int matrix[][])
+    {
+        int n = matrix.length;
+        int m = matrix[0].length;
+        
+        
+        int[][] dp = new int[n][m];
+         
+         
+        // infilize base case
+        
+       
+
+        for(int j = 0; j < m; j++){
+
+                dp[n-1][j] = matrix[n-1][j];
+         }
+     
+        
+        // for remaing cell
+        for(int r = n-2 ; r >= 0; r --){
+            
+            for(int c = 0; c < m ; c++){
+                
+                int ld = (int) -1e9;
+                if( c >= 1){
+                    
+                     ld = matrix[r][c] + dp[r + 1][c - 1];
+                }
+               
+                
+                int rd = (int) -1e9;
+                if(c <= m-2){
+                    
+                     rd = matrix[r][c] + dp[r + 1][c + 1];
+
+                }
+                
+                 int up = matrix[r][c] + dp[r + 1][c];
+               
+                int maxChoice = Math.max(ld, Math.max(up, rd));
+                dp[r][c] = maxChoice;
+
+            }
+        }
+
+        
+        int ans = (int) -1e9;
+        for(int i = 0; i<m; i++){
+            
+            ans = Math.max(ans, dp[0][i]);
+        }
+        
+        return ans;
+
+
+    }
+
+    
+}
+
+
+
+
+
+
+================
+top down
+
+class Solution{
+    static int maximumPath(int N, int matrix[][])
+    {
+        int n = matrix.length;
+        int m = matrix[0].length;
+        
+        
+        int[][] dp = new int[n][m];
+
+        for(int i =0; i < n; i ++){
+
+            for(int j =0; j < m; j++){
+
+                dp[i][j] = -1;
+            }
+        }
+
+
+        // call for all n-1 elementi
+
+        int min =Integer.MIN_VALUE;
+
+        for(int i = 0 ; i < m ; i++){
+
+             int pathSum = findPath(n-1, i, matrix, dp);
+
+             min = Math.max(min, pathSum );
+        }
+
+        return min;
+        
+    
+
+
+    }
+
+    static int findPath(int r, int c, int[][] matrix,  int[][] dp ){
+
+        // out of matix
+        if(c < 0 || c >= matrix[0].length  ){
+
+            return Integer.MIN_VALUE;
+        }
+
+        // base
+        if(r == 0 ){
+
+            return matrix[r][c];
+        }
+
+        if( dp[r][c] != -1){
+
+            return dp[r][c];
+        }
+
+
+        // all choice
+
+        int ld = matrix[r][c] + findPath(r-1, c-1, matrix, dp);
+        int up = matrix[r][c] +  findPath(r-1, c, matrix, dp);
+        int rd = matrix[r][c] +  findPath(r-1, c+1, matrix, dp);
+
+        int min = Math.max( ld, Math.max(up, rd));
+
+        return dp[r][c] = min;
+    }
+    
+}
