@@ -1,0 +1,141 @@
+space optimization:
+
+
+
+
+class Solution {
+    public static int minimizeSum(int n, ArrayList<ArrayList<Integer> >grid) {
+        //using tabulation 
+        
+        // step 1;
+        int m = grid.get( n-1).size();
+        
+        int[] dp = new int[n];
+        
+        
+        // step 2: inilizrion of base
+        
+        for(int i = n-1 ; i >= 0; i --){
+            
+            dp[i] = grid.get(n-1).get(i);
+        }
+        
+        // step start loop accousing the base case
+        // this is grid so need 2 loop
+        
+        for(int r = n-2 ; r >= 0; r--){
+            
+            int[] temp = new int[r+1];
+            
+            for(int c = r; c >=0; c--){
+                
+                int below = grid.get(r).get(c) +  dp[c];
+                int diag = grid.get(r).get(c)  +  dp[c+1];
+                 
+                temp[c] = Math.min( below, diag);
+            }
+            
+            dp = temp;
+        }
+      
+        return dp[0];
+      
+    }
+    
+
+}
+
++++++================================================
+
+Bottom up
+
+
+class Solution {
+    public static int minimizeSum(int n, ArrayList<ArrayList<Integer> >grid) {
+        //using tabulation 
+        
+        // step 1;
+        int m = grid.get( n-1).size();
+        
+        int[][] dp = new int[n][m];
+        
+        for(int i = 0 ; i < n; i++){
+            
+            for(int j =0; j < m; j++){
+                
+                dp[i][j] = -1;
+            }
+        }
+        
+        // step 2: inilizrion of base
+        
+        for(int i = n-1 ; i >= 0; i --){
+            
+            dp[n-1][i] = grid.get(n-1).get(i);
+        }
+        
+        // step start loop accousing the base case
+        // this is grid so need 2 loop
+        
+        for(int r = n-2 ; r >= 0; r--){
+            
+            
+            for(int c = r; c >=0; c--){
+                
+                int below = grid.get(r).get(c) +  dp[r+1] [c];
+                int diag = grid.get(r).get(c)  +  dp[r+1] [c+1];
+                 
+                dp[r][c] = Math.min( below, diag);
+            }
+        }
+      
+        return dp[0][0];
+      
+    }
+    
+
+}
+
+++++++++++++++++++++++
+
+// topdown
+class Solution {
+    public static int minimizeSum(int n, ArrayList<ArrayList<Integer> >grid) {
+        // recursion 2^ N^N
+        
+        int m = grid.get( n-1).size();
+        
+        int[][] dp = new int[n][m];
+        
+        for(int i = 0 ; i < n; i++){
+            
+            for(int j =0; j < m; j++){
+                
+                dp[i][j] = -1;
+            }
+        }
+        
+        return findPath(0,0,grid, dp);
+    }
+    
+    static int findPath(int r,int c, ArrayList<ArrayList<Integer> >grid, int[][] dp){
+        
+        // base case 
+        if( r == grid.size() - 1){
+            
+            return grid.get(r).get(c);
+        }
+                // step 2:
+
+        if(dp[r][c] != -1){
+            
+            return dp[r][c];
+        }
+        
+            
+        int below = grid.get(r).get(c) +  findPath(r+1, c, grid, dp);
+        int diag = grid.get(r).get(c)  + findPath(r+1, c+1, grid, dp);
+    
+        return dp[r][c] = Math.min( below, diag);
+    }
+}
