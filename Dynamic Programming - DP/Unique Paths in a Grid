@@ -1,0 +1,158 @@
+// bottom up approch 
+
+class Solution {
+    
+    static int mod = 1000000007;
+    static int uniquePaths(int n, int m, int[][] grid) {
+        // dp bottom up 
+        
+        
+        // edge case 
+        if(grid[0][0] == 0 || grid[n-1][m-1]== 0) return 0;
+        
+        int[][] dp = new int[n][m];
+        for(int i =0; i < n; i++){
+            
+            for(int j =0; j < m; j++){
+                
+                dp[i][j] = 0;
+            }
+        }
+        
+        
+        
+        for(int i = 0; i < n; i++){
+            
+            for(int j = 0; j < m; j++){
+                
+                if( i == 0 && j ==0 ){ // base case 
+                    
+                    dp[0][0] = 1;
+                    
+                }else{
+                    int right = 0 ;
+                    int down = 0;
+                   // check for huddles 
+                   if(grid[i][j] == 1  ){
+                       
+                       
+                       if(i > 0) right = dp[i-1][j];
+                       if(j > 0) down = dp[i][j-1];
+                        
+                       
+                       dp[i][j] = ( right + down ) % mod;
+                   }
+                    
+                }
+            }
+        }
+        
+        return dp[n-1][m-1];
+    }
+++++++++++++++++++++
+
+
+//top down 
+M*n
+s= M*N + longes path
+
+class Solution {
+    
+    static int mod = 1000000007;
+    static int uniquePaths(int n, int m, int[][] grid) {
+        // dp top down
+        
+        if(grid[0][0] == 0 || grid[n-1][m-1]== 0) return 0;
+        
+        int[][] dp = new int[n][m];
+        for(int i =0; i < n; i++){
+            
+            for(int j =0; j < m; j++){
+                
+                dp[i][j] = -1;
+            }
+        }
+        
+        return findPath(n-1,m-1,grid, dp);
+    }
+    
+    static int findPath(int r,int c, int[][] grid , int[][] dp ){
+        
+        // base case
+        
+         // out of grid
+        if( r < 0 || c < 0){
+            
+            return 0;
+        }
+        
+        // reach the destinatio
+        if(r == 0 && c == 0 ){
+            
+            return 1;
+        }
+        
+        // no path 
+        if( grid[r][c] == 0){
+            
+            return 0;
+        }
+        
+        if( dp[r][c] != -1){
+            return dp[r][c];
+        }
+        
+       
+        
+        // step 2: do all chice
+        
+        int up = findPath(r - 1, c, grid, dp );
+        int left = findPath(r , c -1, grid, dp );
+        
+        return dp[r][c] = (up + left) % mod ;
+    }
+};
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+// recursion 2^ M*N
+class Solution {
+    static int uniquePaths(int n, int m, int[][] grid) {
+        // recursion
+        if(grid[0][0] == 0 || grid[n-1][m-1]== 0) return 0;
+        
+        return findPath(n-1,m-1,grid);
+    }
+    
+    static int findPath(int r,int c, int[][] grid){
+        
+        // base case
+        
+         // out of grid
+        if( r < 0 || c < 0){
+            
+            return 0;
+        }
+        
+        // reach the destinatio
+        if(r == 0 && c == 0 ){
+            
+            return 1;
+        }
+        
+        // no path 
+        if( grid[r][c] == 0){
+            
+            return 0;
+        }
+        
+       
+        
+        // step 2: do all chice
+        
+        int up = findPath(r - 1, c, grid );
+        int left = findPath(r , c -1, grid );
+        
+        return up + left;
+    }
+};
