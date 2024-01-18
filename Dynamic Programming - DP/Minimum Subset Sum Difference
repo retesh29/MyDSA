@@ -1,0 +1,80 @@
+
+class Solution
+{
+
+	public int minDifference(int arr[], int N) 
+	{ 
+	      
+       //find the all total sum
+       int totalSum = 0;
+       for(int i =0; i < N; i++){
+           
+           totalSum += arr[i];
+       }
+	    
+	   int sum = totalSum;
+        // base case 
+        boolean[][] dp = new boolean[N][sum +1];
+        
+        
+        // step 2 base case iniliziaino
+        // for all index if target == 0 hai means true
+        
+        for(int i = 0; i < N;i++){
+            
+            dp[i][0] = true;
+        }
+        
+        //  last elemet hai or target v same hai
+        if (arr[0] <= sum) {
+            
+            dp[0][arr[0]] = true;
+        }
+        // no. of stat == no of loop
+        
+        for(int i = 1; i < N; i++){
+            
+            // every sum k liye condition
+            for(int target = 1; target <= sum ; target++ ){
+                
+                
+                
+                boolean notPick = dp[i-1][target];
+        
+        //chekc value is badi to ni hai sum 
+        
+                boolean pick = false;
+        
+                if( arr[i] <= target){
+            
+                   pick = dp[i-1][target - arr[i] ];
+                } 
+                
+                
+                dp[i][target] = (notPick|| pick);
+                  
+                
+            }
+        }
+      
+       
+       // find min diff
+       
+       int mini = Integer.MAX_VALUE;
+       
+       for(int i =0; i <= totalSum /2 ; i++){
+         
+           
+           if(dp[N-1][i] ==  true){
+            
+                                 // total - s1  = get(  s2 ) - s1   
+               mini = Math.min(  Math.abs(totalSum - i) - i, mini);
+           }
+           
+       }
+       
+       return mini;
+        
+    
+	} 
+}
