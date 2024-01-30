@@ -1,0 +1,107 @@
+Expected Time & Complexity: O(N*W)
+S= O(w) if space optimize
+class Solution{
+    static int knapSack(int n, int w, int val[], int wt[])
+    {
+      
+    
+        // bottom up 
+      
+        int[][] dp = new int[n][w+1];
+       
+        // step 2; inilaize base ccase
+        //no.
+        for (int i = wt[0]; i <= w; i++) {
+            
+            dp[0][i] = ((int) i / wt[0]) * val[0];
+        }
+
+        
+        for(int idx = 1; idx < n; idx++){
+            
+            for(int j = 0 ; j < w+1; j++ ){
+                
+                
+                // if ks is smaller 
+                
+                 if( j >= wt[idx]){
+            
+                      // two choice 
+            
+                    int notPick = 0 + dp[idx-1][j];
+            
+                    int pick = val[idx] + dp[idx ][j - wt[idx]];
+            
+                       dp[idx][j] = Math.max(notPick, pick);
+            
+                   }else{
+              
+                          // not pick
+                       dp[idx][j] = 0 + dp[idx-1][j];
+                   }
+            }
+        }
+        
+        return dp[n-1][w]; 
+      
+    }
+ 
+}
+
++++++++++++++++++++++++++++++
+class Solution{
+    static int knapSack(int n, int W, int val[], int wt[])
+    {
+      
+      int[][] dp = new int[n][W+1];
+        
+        for(int i =0; i < n; i++){
+            
+            for(int j =0; j < W+1; j++){
+                
+                
+                dp[i][j] = -1;
+            }
+            
+        }
+         
+       return solve(n-1,W,wt,val, dp);
+    }
+    
+    
+    static int solve(int idx ,int w, int wa[], int[] val,int[][] dp){
+        
+        
+        // base case , chaning variable smallest valid  value
+        
+        if( w == 0 || idx < 0){
+     
+            return 0; 
+        }
+        
+        // step 2: check for overlaping
+        if(dp[idx][w] != -1){
+            
+            return dp[idx][w];
+        }
+       
+        
+        
+        if( w >= wa[idx]){
+            
+            // two choice 
+            
+            int notPick = 0 + solve(idx-1, w, wa, val, dp);
+            
+            int pick = val[idx] + solve(idx, w - wa[idx], wa, val, dp);
+            
+            return dp[idx][w] = Math.max(notPick, pick);
+            
+        }else{
+              
+              // not pick
+              return dp[idx][w] = 0 + solve(idx-1, w, wa, val, dp);
+        }
+        
+    }
+}
