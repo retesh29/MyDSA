@@ -1,0 +1,128 @@
+
+Expected Time Complexity: O(V*M)
+Expected Auxiliary Space: O(V)
+
+class Solution{
+
+	public int minCoins(int coins[], int n, int w) 
+	{ 
+	    
+	    
+	    int[][] dp = new int[n][w+1];
+	    
+	    
+	    
+	    for(int i =0; i < w+1; i++){
+	        
+	        if(i % coins[0] == 0 ){
+	            
+	            dp[0][i] = i / coins[0];
+	            
+	        }else{
+	            
+	            dp[0][i] = Integer.MAX_VALUE -1;
+	        }
+	    }
+	    
+	    for(int idx = 1; idx < n; idx++){
+	        
+	        for(int wt = 0 ; wt < w+1; wt++   ){
+	            
+	            
+	            
+	            if(coins[idx] <= wt){
+	        
+	               int notPick = 0 + dp[idx -1][wt];
+	               int pick = 1 + dp[idx][wt - coins[idx]];
+	        
+	                dp[idx][wt] = Math.min(notPick, pick);
+	        
+	           }else{
+	        
+	               dp[idx][wt] = 0 + 0 + dp[idx -1][wt];
+	          }       
+	            
+	        }
+	    }
+	    
+	    
+	   if(dp[n-1][w] == 2147483646){
+	       
+	       return -1;
+	   }else{
+	       
+	       return dp[n-1][w];
+	   }
+
+	    
+	   
+	}
+	
+
+}
+
+
+=========================================================
+
+
+class Solution{
+
+	public int minCoins(int coins[], int n, int w) 
+	{ 
+	    
+	    
+	    int[][] dp = new int[n][w+1];
+	    
+	    for(int i =0; i < n; i++){
+	        
+	        for(int j =0; j < w+1; j++){
+	            
+	            dp[i][j] = -1;
+	        }
+	    }
+	    
+	    
+	    if(findMinCoins(n-1, w, coins, dp) == 2147483646){
+	        
+	        return -1;
+	    }else{
+	        
+	        return findMinCoins(n-1, w, coins, dp);
+	    }
+	}
+	
+	int findMinCoins(int idx, int w, int[] coins, int[][] dp){
+	    
+	    // base case
+	    
+	  
+	    
+	    if( idx == 0){
+	        
+	        if( w % coins[0] == 0){
+	            
+	            return ( w / coins[0]);
+	        }
+	        
+	        return Integer.MAX_VALUE - 1;
+	    }
+	    
+	    // dp
+	    if(dp[idx][w] != -1){
+	        
+	        return dp[idx][w];
+	    }
+	    
+	    if(coins[idx] <= w){
+	        
+	        int notPick = 0 + findMinCoins(idx-1,w, coins, dp);
+	        int pick = 1 + findMinCoins(idx, w - coins[idx], coins, dp);
+	        
+	        return dp[idx][w] = Math.min(notPick, pick);
+	        
+	    }else{
+	        
+	        return dp[idx][w] = 0 + findMinCoins(idx-1,w, coins, dp);
+	    }
+	}
+}
