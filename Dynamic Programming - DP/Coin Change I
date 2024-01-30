@@ -1,0 +1,141 @@
+Expected Time Complexity: O(sum*N)
+Expected Auxiliary Space: O(sum)// after space optimzie
+
+
+class Solution {
+    
+    int mod = (int) 1e9 +7 ;
+    
+    public long count(int coins[], int N, int sum) {
+        
+        
+     long[][] dp = new long[N][sum +1];
+        
+        
+        // step 2 base case iniliziaino
+        
+        for (int i = 0; i <= sum; i++) {
+            if (i % coins[0] == 0)
+                dp[0][i] = 1;
+            // Else condition is automatically fulfilled, as dp array is initialized to zero
+        }
+      
+        
+        
+        // no. of stat == no of loop
+        
+        for(int i = 1; i < N; i++){
+            
+            // every sum k liye condition
+            for(int target = 0 ; target <= sum ; target++ ){
+                
+                
+                
+              
+        //chekc value is badi to ni hai sum 
+        
+               
+        
+                if( coins[i] <= target){
+                    
+                     long notPick = dp[i-1][target];
+        
+            
+                     long pick = dp[i][target - coins[i] ];
+                
+                      dp[i][target] = (notPick + pick) ;
+                }else{
+                    
+                    dp[i][target] = dp[i-1][target];
+                } 
+                
+                
+                
+                  
+                
+            }
+        }
+        
+        return dp[N-1][sum];
+        
+   
+	} 
+}
+      
++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+class Solution {
+    
+    int mod = (int) 1e9 +7 ;
+    
+    public long count(int coins[], int N, int sum) {
+        
+        
+        long[][] dp = new long[N][sum +1];
+        
+        for(int i = 0; i < N; i++){
+            
+            for(int j = 0; j < sum +1; j++){
+                
+                dp[i][j] = -1;
+            }
+        }
+        
+        return findTarget(N-1,sum,coins, dp);
+    }
+    
+     long findTarget(int idx, int sum, int[] coins,  long[][] dp){
+        
+        // baser case
+        
+       // sum is equal to target
+       if( sum == 0 ){
+           
+           return 1;
+       }
+       
+       if( idx < 0){ // no element left for to making the sum 
+           
+           return 0;
+       }
+        
+        if( dp[idx][sum] != -1){
+            
+            return dp[idx][sum];
+        }
+        
+        //pick and don't pick algo
+        
+        
+        
+        //chekc value is badi to ni hai sum 
+        
+        
+        //pick and don't pick algo
+        
+        long notPick = findTarget(idx-1, sum, coins,dp);
+        
+        //chekc value is badi to ni hai sum 
+        
+        long pick = 0;
+        
+        if( coins[idx] <= sum){
+            
+            pick = findTarget(idx, sum - coins[idx], coins,dp );
+        } 
+        
+        
+        // chekc for both
+        
+        
+        
+        return dp[idx][sum] = (pick + notPick);
+        
+        
+   
+	} 
+}
