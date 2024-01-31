@@ -1,0 +1,105 @@
+
+class Solution
+{
+    //Function to find the length of longest common subsequence in two strings.
+    static int lcs(int m, int n, String s1, String s2)
+    {
+         
+        // dp
+        
+        int[][] dp = new int[m+1][n+1];
+        
+        // base case
+        
+    
+        
+        for(int i =1; i <= m; i++){
+            
+            for(int j =1; j <= n; j++){
+                
+               
+               
+               if(s1.charAt(i-1) == s2.charAt(j-1)){
+            
+             
+                   dp[i][j] = 1 + dp[i-1][j-1];
+        
+            
+                }else{
+            
+            // take both desiton
+            
+                    int out1 = dp[i-1][j];
+            
+                    int out2 = dp[i][ j-1];
+             
+                    dp[i][j] = Math.max(out1,out2);
+               }
+            }
+        }
+        
+        return dp[m][n];
+    }
+
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+class Solution
+{
+    //Function to find the length of longest common subsequence in two strings.
+    static int lcs(int m, int n, String s1, String s2)
+    {
+         
+        // dp
+        
+        int[][] dp = new int[m+1][n+1];
+        
+        for(int i =0; i <= m; i++){
+            
+            for(int j =0; j <= n; j++){
+                
+                dp[i][j] = -1;
+            }
+        }
+        
+        return findlcs(m, n, s1,s2, dp);
+   
+       
+    }
+    
+    static int findlcs(int x, int y, String s1, String s2, int[][] dp){
+        
+         if(x == 0 || y == 0){
+            
+            return 0;
+        }
+        
+        
+        
+        if( dp[x][y] != -1){
+            
+            return dp[x][y];
+        }
+        
+        // last elemetn is mathch
+        
+        if(s1.charAt(x-1) == s2.charAt(y-1)){
+            
+            
+            return dp[x][y] = 1 + findlcs(x-1,y-1, s1, s2, dp);
+        
+            
+        }else{
+            
+            // take both desiton
+            
+            int out1 = findlcs(x-1, y, s1, s2, dp);
+            
+            int out2 = findlcs(x, y-1,  s1 , s2, dp);
+            
+            return dp[x][y] = Math.max(out1,out2);
+        }
+    }
+    
+}
