@@ -1,0 +1,70 @@
+ public static String findLCS(int n, int m, String s1, String s2){
+        
+        
+        String[][] dp = new String[n+1][m+1];
+        
+        for(int i =0; i <= n; i++){
+            
+            for(int j =0; j <= m; j++){
+                
+                dp[i][j] = null ;
+            }
+        }
+        
+        String lcs = findlcs(n, m, s1,s2, dp);
+
+        String ans = "";
+        for (int i = lcs.length() - 1; i >= 0; i--) {
+              ans += lcs.charAt(i);
+        }
+        
+        
+
+       
+        
+        return ans;
+   
+       
+    }
+    
+    public static String findlcs(int x, int y, String s1, String s2, String[][] dp){
+        
+         if(x == 0 || y == 0){
+            
+            String a = "";
+            return a;
+        }
+        
+        
+        
+        if( dp[x][y] != null){
+            
+            return dp[x][y];
+        }
+        
+        // last elemetn is mathch
+        
+        if(s1.charAt(x-1) == s2.charAt(y-1)){
+            
+            
+            return dp[x][y] = s1.charAt(x-1) + findlcs(x-1, y-1, s1, s2, dp);
+
+        
+            
+        }else{
+            
+            // take both desiton
+            
+            String out1 = findlcs(x-1, y, s1, s2, dp);
+            
+            String out2 = findlcs(x, y-1,  s1 , s2, dp);
+            
+            if(out1.length() > out2.length()){
+
+                return dp[x][y] = out1;
+            }else{
+
+                return dp[x][y] = out2;
+            }
+        }
+    }
