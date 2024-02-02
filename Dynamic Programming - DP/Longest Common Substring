@@ -1,0 +1,113 @@
+
+class Solution{
+    int longestCommonSubstr(String s1, String s2, int m, int n){
+        // code here
+       
+     int[][] dp = new int[m+1][n+1];
+        
+        // base case
+        
+        int ans = 0;
+    
+        
+        for(int i =1; i <= m; i++){
+            
+            for(int j =1; j <= n; j++){
+                
+               
+               
+               if(s1.charAt(i-1) == s2.charAt(j-1)){
+            
+             
+                   dp[i][j] = 1 + dp[i-1][j-1];
+                   
+                   // check this logest one subsring 
+                   
+                   ans = Math.max(dp[i][j], ans);
+        
+            
+                }else{
+            
+       
+             
+                    dp[i][j] = 0;
+               }
+            }
+        }
+        
+       return ans;
+    }
+
+}
+
+
+===================================================================
+class Solution{
+    
+    private int ans = 0;
+    
+    int longestCommonSubstr(String s1, String s2, int m, int n){
+        // code here
+       
+        // dp using the jugad dp
+        
+        int[][] dp = new int[m+1][n+1];
+        
+        for(int i =0; i <= m; i++){
+            
+            for(int j =0; j <= n; j++){
+                
+                dp[i][j] = -1;
+            }
+        }
+        
+        // dp are for overhead call
+        // actual answer is contain by ans global veriable
+        
+        findlcs(m, n, s1,s2, dp);
+        return ans;
+   
+       
+    }
+    
+     int findlcs(int x, int y, String s1, String s2, int[][] dp){
+        
+         if(x == 0 || y == 0){
+            
+            return 0;
+        }
+        
+        
+        
+        if( dp[x][y] != -1){
+            
+            return dp[x][y];
+        }
+        
+        // last elemetn is mathch
+        
+        if(s1.charAt(x-1) == s2.charAt(y-1)){
+            
+            
+            dp[x][y] = 1 + findlcs(x-1,y-1, s1, s2, dp);
+            
+            ans = Math.max( dp[x][y], ans);
+        
+        
+            
+        }else{
+            
+            // take both desiton
+            
+            dp[x][y] = 0;
+        }
+        
+        // extra call for s1 and s2 so can make both possible 
+        findlcs(x-1, y, s1, s2, dp);
+            
+        findlcs(x, y-1,  s1 , s2, dp);
+            
+        return dp[x][y] ;
+    }
+    
+}
